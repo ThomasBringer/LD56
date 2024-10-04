@@ -1,40 +1,78 @@
-name: Build Godot Project
+name: Deploy to Itch.io
+
 on:
   push:
     branches:
       - main
   workflow_dispatch: {}
+
+env:
+  BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+  ITCHIO_USERNAME: ${{ secrets.ITCHIO_USERNAME }}
+  PROJECT_NAME: "ld56"
+
 jobs:
-  export_web:
-    name: Export
+  Build:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v3
-        with:
-          lfs: true
-      - name: Download Godot executable and templates
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Get Godot Version
         run: |
-          curl -L -o Godot_v4.3-stable_win64.zip https://downloads.tuxfamily.org/godotengine/4.3/Godot_v4.3-stable_win64.zip
-          curl -L -o Godot_v4.3-stable_export_templates.tpz https://downloads.tuxfamily.org/godotengine/4.3/Godot_v4.3-stable_export_templates.tpz
-      - name: Extract Godot
+          $GODOT_VERSION = (Get-Content project.godot | Select-String '^config/features' | ForEach-Object { ($_ -split '"')[1] })
+          echo "GODOT_VERSION=$GODOT_VERSION" >> $GITHUB_ENV
+
+      - name: Download Godot
         run: |
-          mkdir -p godot
-          tar -xf Godot_v4.3-stable_win64.zip -C godot
-      - name: Build and export
-        id: export
-        uses: firebelley/godot-export@v5.2.1
+          curl -L -o godot.zip https://downloads.tuxfamily.org/godotengine/$GODOT_VERSION/Godot_v$GODOT_VERSION-stable_win64.zip
+          powershell -Command "Expand-Archive -Path 'godot.zip' -DestinationPath 'godot'"
+
+      - name: Download Godot Export Templates
+        run: |
+          curl -L -o export_templates.zip https://downloads.tuxfamily.org/godotengine/$GODOT_VERSION/Godot_v$GODOT_VERSION-stable_export_templates.tpz
+          powershell -Command "Expand-Archive -Path 'export_templates.zip' -DestinationPath 'templates'"
+
+      - name: Install Export Templates
+        run: |
+          mkdir -p "$HOME/.local/share/godot/export_templates/$GODOT_VERSION.stable"
+          Move-Item -Path "./templates/*" -Destination "$HOME/.local/share/godot/export_templates/$GODOT_VERSION.stable"
+
+      - name: Build
+        run: |
+          .\godot\Godot.exe --headless --export-release html
+
+      - name: Zip HTML Export
+        run: |
+          cd exports/html
+          powershell -Command "Compress-Archive -Path * -DestinationPath ..\$PROJECT_NAME-html.zip"
+          cd -
+
+      - name: Save Artifacts for Next Job
+        uses: actions/upload-artifact@v4
         with:
-          godot_executable_download_url: ./godot/Godot.exe # Path to the extracted Godot executable
-          godot_export_templates_download_url: ./Godot_v4.3-stable_export_templates.tpz
-          relative_project_path: ./game/
-          archive_output: true
-          use_preset_export_path: true
-          export_debug: false
-      - name: Upload web build to itch
-        uses: KikimoraGames/itch-publish@v0.0.3
+          name: exports
+          path: exports
+
+  Publish:
+    needs: Build
+    runs-on: windows-latest
+    steps:
+      - name: Get Artifacts
+        uses: actions/download-artifact@v4
         with:
-          butlerApiKey: ${{ secrets.BUTLER_API_KEY }}
-          gameData: ./exports/web/index.zip
-          itchUsername: ${{ secrets.ITCH_USER }}
-          itchGameId: ld56
-          buildChannel: html5
+          name: exports
+          path: exports
+
+      - name: Download Butler
+        run: |
+          curl -L -o butler.zip https://broth.itch.ovh/butler/windows-amd64/LATEST/archive/default
+          powershell -Command "Expand-Archive -Path 'butler.zip' -DestinationPath 'butler'"
+          .\butler\butler.exe -V
+
+      - name: Login To Butler
+        run: .\butler\butler.exe login ${{ secrets.BUTLER_API_KEY }}
+
+      - name: Push To Itch
+        run: |
+          .\butler\butler.exe push ./exports/$PROJECT_NAME-html.zip $ITCHIO_USERNAME/$PROJECT_NAME:html
