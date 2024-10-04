@@ -11,7 +11,7 @@ jobs:
     runs-on: windows-latest
     env:
       BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
-      ITCHIO_USERNAME: ${{ secrets.ITCHIO_USERNAME }}
+      ITCHIO_USERNAME: ${{ secrets.ITCH_USER }}
       PROJECT_NAME: "ld56"
       GODOT_VERSION: "4.3" # Manually set Godot version
 
@@ -21,20 +21,22 @@ jobs:
 
       - name: Debug URL
         run: |
-          echo "Downloading Godot from:https://downloads.tuxfamily.org/godotengine/4.3/Godot_v4.3-stable_win64.exe.zip"
+          echo "Downloading Godot from: https://downloads.tuxfamily.org/godotengine/$GODOT_VERSION/Godot_v$GODOT_VERSION-stable_win64.zip"
 
       - name: Download Godot
         run: |
-          curl -v -L -o godot.zip https://downloads.tuxfamily.org/godotengine/4.3/Godot_v4.3-stable_win64.exe.zip
+          curl -v -L -o godot.zip https://downloads.tuxfamily.org/godotengine/$GODOT_VERSION/Godot_v$GODOT_VERSION-stable_win64.zip
           if ((Get-Item "godot.zip").Length -lt 1000) {
             Write-Error "Godot download failed or file is too small."
             exit 1
           }
+          # Create a directory for Godot if it doesn't exist
+          New-Item -ItemType Directory -Path 'godot' -Force
           powershell -Command "Expand-Archive -Path 'godot.zip' -DestinationPath 'godot'"
 
       - name: Download Export Templates
         run: |
-          curl -v -L -o export_templates.zip https://downloads.tuxfamily.org/godotengine/4.3/Godot_v4.3-stable_export_templates.tpz
+          curl -v -L -o export_templates.zip https://downloads.tuxfamily.org/godotengine/$GODOT_VERSION/Godot_v$GODOT_VERSION-stable_export_templates.tpz
           if ((Get-Item "export_templates.zip").Length -lt 1000) {
             Write-Error "Export templates download failed or file is too small."
             exit 1
@@ -43,11 +45,12 @@ jobs:
 
       - name: Setup Export Templates
         run: |
-          mkdir -p $env:LOCALAPPDATA\share\godot\export_templates\4.3.stable
-          Copy-Item -Path export_templates\* -Destination $env:LOCALAPPDATA\share\godot\export_templates\4.3.stable
+          mkdir -p $env:LOCALAPPDATA\share\godot\export_templates\$GODOT_VERSION.stable
+          Copy-Item -Path export_templates\* -Destination $env:LOCALAPPDATA\share\godot\export_templates\$GODOT_VERSION.stable
 
       - name: Run Godot Export
         run: |
+          # Ensure to use the correct path to Godot.exe
           .\godot\Godot.exe --headless --export-release html
 
       - name: Upload Build Artifact
