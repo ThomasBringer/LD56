@@ -59,6 +59,13 @@ jobs:
           name: build-artifact
           path: html/
 
+      - name: Install Butler
+        run: |
+          Invoke-WebRequest -Uri "https://itch.io/butler" -OutFile "butler.zip"
+          powershell -Command "Expand-Archive -Path 'butler.zip' -DestinationPath 'butler'"
+          # Set path to the Butler executable
+          $env:PATH += ";$(Get-Location)\butler"
+
       - name: Upload to itch.io
         run: |
           butler push html/ ${{ env.ITCH_USER }}/${{ env.PROJECT_NAME }}:windows --userversion 1.0.0
