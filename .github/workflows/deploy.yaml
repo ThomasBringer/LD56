@@ -10,24 +10,37 @@ jobs:
     name: Export
     runs-on: windows-latest
     steps:
+      # Step 1: Install wget using Chocolatey
       - name: Install wget
         run: choco install wget -y
 
+      # Step 2: Checkout the repository
       - uses: actions/checkout@v3
         with:
           lfs: true
 
+      # Step 3: Download Godot executable
       - name: Download Godot Executable
         run: |
           wget https://downloads.tuxfamily.org/godotengine/4.3/Godot_v4.3-stable_win64.zip -O Godot_v4.3-stable_win64.zip
           Expand-Archive -Path Godot_v4.3-stable_win64.zip -DestinationPath "./godot"
 
+      # Step 4: Download Godot export templates
       - name: Download Godot Export Templates
         run: |
           wget https://downloads.tuxfamily.org/godotengine/4.3/Godot_v4.3-stable_export_templates.tpz -O Godot_v4.3-stable_export_templates.tpz
           mkdir -p ./godot/export_templates
           tar -xf Godot_v4.3-stable_export_templates.tpz -C ./godot/export_templates
 
+      # Step 5: List files to verify paths
+      - name: List files in Godot directory
+        run: dir ./godot
+
+      # Step 6: Grant execute permissions to Godot executable
+      - name: Grant execute permissions to Godot executable
+        run: chmod +x ./godot/Godot_v4.3-stable_win64.exe
+
+      # Step 7: Build and export the project
       - name: Build and export
         id: export
         uses: firebelley/godot-export@v5.2.1
@@ -38,6 +51,7 @@ jobs:
           use_preset_export_path: true
           export_debug: false
 
+      # Step 8: Upload web build to itch.io
       - name: Upload web build to itch
         uses: KikimoraGames/itch-publish@v0.0.3
         with:
