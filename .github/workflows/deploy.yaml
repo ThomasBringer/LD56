@@ -16,11 +16,15 @@ jobs:
         run: |
           curl -L -o Godot_v4.3-stable_win64.zip https://downloads.tuxfamily.org/godotengine/4.3/Godot_v4.3-stable_win64.zip
           curl -L -o Godot_v4.3-stable_export_templates.tpz https://downloads.tuxfamily.org/godotengine/4.3/Godot_v4.3-stable_export_templates.tpz
+      - name: Extract Godot
+        run: |
+          mkdir -p godot
+          tar -xf Godot_v4.3-stable_win64.zip -C godot
       - name: Build and export
         id: export
         uses: firebelley/godot-export@v5.2.1
         with:
-          godot_executable_download_url: ./Godot_v4.3-stable_win64.zip
+          godot_executable_download_url: ./godot/Godot.exe # Path to the extracted Godot executable
           godot_export_templates_download_url: ./Godot_v4.3-stable_export_templates.tpz
           relative_project_path: ./game/
           archive_output: true
