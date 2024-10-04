@@ -61,10 +61,9 @@ jobs:
 
       - name: Install Butler
         run: |
-          Invoke-WebRequest -Uri "https://broth.itch.ovh/butler" -OutFile "butler.zip"
+          curl -v -L -o butler.zip https://broth.itch.zone/butler/windows-amd64/15.21.0/archive-default.zip
+          New-Item -ItemType Directory -Path 'butler' -Force
           powershell -Command "Expand-Archive -Path 'butler.zip' -DestinationPath 'butler'"
-          # Set path to the Butler executable
-          $env:PATH += ";$(Get-Location)\butler"
 
       - name: Upload to itch.io
         run: |
