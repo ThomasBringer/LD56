@@ -61,4 +61,4 @@ jobs:
 
       - name: Upload to itch.io
         run: |
-          butler push html/ ${{ ITCH_USER }}/${{ env.PROJECT_NAME }}:windows --userversion 1.0.0
+          butler push html/ ${{ env.ITCH_USER }}/${{ env.PROJECT_NAME }}:windows --userversion 1.0.0
