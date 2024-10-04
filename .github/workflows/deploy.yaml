@@ -21,11 +21,11 @@ jobs:
 
       - name: Debug URL
         run: |
-          echo "Downloading Godot from: https://downloads.tuxfamily.org/godotengine/4.3/Godot_v4.3-stable_win64.zip"
+          echo "Downloading Godot from: https://downloads.tuxfamily.org/godotengine/4.3/Godot_v4.3-stable_win64.exe.zip"
 
       - name: Download Godot
         run: |
-          curl -v -L -o godot.zip https://downloads.tuxfamily.org/godotengine/4.3/Godot_v4.3-stable_win64.zip
+          curl -v -L -o godot.zip https://downloads.tuxfamily.org/godotengine/4.3/Godot_v4.3-stable_win64.exe.zip
           if ((Get-Item "godot.zip").Length -lt 1000) {
             Write-Error "Godot download failed or file is too small."
             exit 1
