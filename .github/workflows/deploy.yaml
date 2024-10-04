@@ -7,10 +7,10 @@ on:
   workflow_dispatch: {}
 
 env:
-  BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }} # Repository Settings -> Secrets and variables -> Actions -> New repository secret
+  BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
   ITCHIO_USERNAME: ${{ secrets.ITCHIO_USERNAME }}
-  PROJECT_NAME: "ld56" # See README.md about project, channel, and export file naming conventions
-  GODOT_VERSION: "4.3" # Set Godot version manually
+  PROJECT_NAME: "ld56"
+  GODOT_VERSION: "4.3" # Manually set Godot version
 
 jobs:
   Build:
@@ -19,18 +19,14 @@ jobs:
       - name: Checkout Source Code
         uses: actions/checkout@v4
 
-      - name: List Files
-        run: |
-          Get-ChildItem -Recurse
-
       - name: Download Godot
         run: |
           curl -L -o godot.zip https://downloads.tuxfamily.org/godotengine/$GODOT_VERSION/Godot_v$GODOT_VERSION-stable_win64.zip
           powershell -Command "Expand-Archive -Path 'godot.zip' -DestinationPath 'godot'"
 
-      - name: Verify Godot Executable
+      - name: Verify Godot Files
         run: |
-          Get-ChildItem -Path './godot' -Recurse
+          dir .\godot
 
       - name: Download Godot Export Templates
         run: |
