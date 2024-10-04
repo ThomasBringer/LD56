@@ -11,7 +11,7 @@ jobs:
     runs-on: windows-latest
     env:
       BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
-      ITCHIO_USERNAME: ${{ secrets.ITCH_USER }}
+      ITCH_USER: ${{ secrets.ITCH_USER }}
       PROJECT_NAME: "ld56"
       GODOT_VERSION: "4.3" # Manually set Godot version
 
@@ -58,3 +58,7 @@ jobs:
         with:
           name: build-artifact
           path: html/
+
+      - name: Upload to itch.io
+        run: |
+          butler push html/ ${{ ITCH_USER }}/${{ env.PROJECT_NAME }}:windows --userversion 1.0.0
