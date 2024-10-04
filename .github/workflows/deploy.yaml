@@ -28,6 +28,10 @@ jobs:
           curl -L -o godot.zip https://downloads.tuxfamily.org/godotengine/$GODOT_VERSION/Godot_v$GODOT_VERSION-stable_win64.zip
           powershell -Command "Expand-Archive -Path 'godot.zip' -DestinationPath 'godot'"
 
+      - name: Verify Godot Executable
+        run: |
+          Get-ChildItem -Path './godot' -Recurse
+
       - name: Download Godot Export Templates
         run: |
           curl -L -o export_templates.zip https://downloads.tuxfamily.org/godotengine/$GODOT_VERSION/Godot_v$GODOT_VERSION-stable_export_templates.tpz
