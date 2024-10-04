@@ -21,7 +21,11 @@ jobs:
 
       - name: Download Godot
         run: |
-          curl -L -o godot.zip https://downloads.tuxfamily.org/godotengine/$GODOT_VERSION/Godot_v$GODOT_VERSION-stable_win64.zip
+          curl -v -L -o godot.zip https://downloads.tuxfamily.org/godotengine/$GODOT_VERSION/Godot_v$GODOT_VERSION-stable_win64.zip
+          if ((Get-Item "godot.zip").Length -lt 1000) {
+            Write-Error "Godot download failed or file is too small."
+            exit 1
+          }
           powershell -Command "Expand-Archive -Path 'godot.zip' -DestinationPath 'godot'"
 
       - name: Verify Godot Files
@@ -30,7 +34,11 @@ jobs:
 
       - name: Download Godot Export Templates
         run: |
-          curl -L -o export_templates.zip https://downloads.tuxfamily.org/godotengine/$GODOT_VERSION/Godot_v$GODOT_VERSION-stable_export_templates.tpz
+          curl -v -L -o export_templates.zip https://downloads.tuxfamily.org/godotengine/$GODOT_VERSION/Godot_v$GODOT_VERSION-stable_export_templates.tpz
+          if ((Get-Item "export_templates.zip").Length -lt 1000) {
+            Write-Error "Export templates download failed or file is too small."
+            exit 1
+          }
           powershell -Command "Expand-Archive -Path 'export_templates.zip' -DestinationPath 'export_templates'"
 
       - name: Install Export Templates
