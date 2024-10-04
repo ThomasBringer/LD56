@@ -7,9 +7,10 @@ on:
   workflow_dispatch: {}
 
 env:
-  BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+  BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }} # Repository Settings -> Secrets and variables -> Actions -> New repository secret
   ITCHIO_USERNAME: ${{ secrets.ITCHIO_USERNAME }}
-  PROJECT_NAME: "ld56"
+  PROJECT_NAME: "ld56" # See README.md about project, channel, and export file naming conventions
+  GODOT_VERSION: "4.3" # Set Godot version manually
 
 jobs:
   Build:
@@ -18,10 +19,9 @@ jobs:
       - name: Checkout Source Code
         uses: actions/checkout@v4
 
-      - name: Get Godot Version
+      - name: List Files
         run: |
-          $GODOT_VERSION = (Get-Content project.godot | Select-String '^config/features' | ForEach-Object { ($_ -split '"')[1] })
-          echo "GODOT_VERSION=$GODOT_VERSION" >> $GITHUB_ENV
+          Get-ChildItem -Recurse
 
       - name: Download Godot
         run: |
@@ -31,12 +31,12 @@ jobs:
       - name: Download Godot Export Templates
         run: |
           curl -L -o export_templates.zip https://downloads.tuxfamily.org/godotengine/$GODOT_VERSION/Godot_v$GODOT_VERSION-stable_export_templates.tpz
-          powershell -Command "Expand-Archive -Path 'export_templates.zip' -DestinationPath 'templates'"
+          powershell -Command "Expand-Archive -Path 'export_templates.zip' -DestinationPath 'export_templates'"
 
       - name: Install Export Templates
         run: |
-          mkdir -p "$HOME/.local/share/godot/export_templates/$GODOT_VERSION.stable"
-          Move-Item -Path "./templates/*" -Destination "$HOME/.local/share/godot/export_templates/$GODOT_VERSION.stable"
+          mkdir -p ~/.local/share/godot/export_templates/$GODOT_VERSION.stable
+          mv ./export_templates/* ~/.local/share/godot/export_templates/$GODOT_VERSION.stable
 
       - name: Build
         run: |
@@ -45,7 +45,8 @@ jobs:
       - name: Zip HTML Export
         run: |
           cd exports/html
-          powershell -Command "Compress-Archive -Path * -DestinationPath ..\$PROJECT_NAME-html.zip"
+          zip $PROJECT_NAME-html.zip -r -m *
+          mv $PROJECT_NAME-html.zip ..
           cd -
 
       - name: Save Artifacts for Next Job
@@ -71,7 +72,7 @@ jobs:
           .\butler\butler.exe -V
 
       - name: Login To Butler
-        run: .\butler\butler.exe login ${{ secrets.BUTLER_API_KEY }}
+        run: .\butler\butler.exe login
 
       - name: Push To Itch
         run: |
