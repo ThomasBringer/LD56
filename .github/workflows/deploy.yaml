@@ -50,7 +50,7 @@ jobs:
 
       - name: Run Godot Export
         run: |
-          .\godot\Godot_v4.3-stable_win64.exe --headless --export-release "HTML5" --export-path .\exports\html
+          .\godot\Godot_v4.3-stable_win64.exe --headless --export-release "HTML5" --export-path ..\exports\html
 
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
