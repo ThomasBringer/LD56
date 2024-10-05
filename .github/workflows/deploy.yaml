@@ -59,14 +59,19 @@ jobs:
           name: build-artifact
           path: html/
 
+      # Step to print the current working directory
+      - name: Print current directory
+        run: pwd
+
+      # Step to list all files in the current working directory
+      - name: List all files
+        run: Get-ChildItem -Recurse -File | Select-Object FullName
+
       - name: Install Butler
         run: |
           curl -v -L -o butler.zip https://broth.itch.zone/butler/windows-amd64/15.21.0/archive-default.zip
           New-Item -ItemType Directory -Path 'butler' -Force
           powershell -Command "Expand-Archive -Path 'butler.zip' -DestinationPath 'butler'"
-
-      - name: List exports directory
-        run: dir ..\exports
 
       - name: Upload to itch.io
         run: |
