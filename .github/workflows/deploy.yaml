@@ -74,4 +74,4 @@ jobs:
 
       - name: Upload Build
         run: |
-          .\butler\butler.exe push $env:EXPORTS_PATH "thomas-bringer/ld56:html" --userversion 1.0.0
+          .\butler\butler.exe push "..\exports\html\" "thomas-bringer/ld56:html" --userversion 1.0.0
