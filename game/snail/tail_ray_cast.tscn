@@ -9,8 +9,8 @@ script = ExtResource("1_pfijc")
 [node name="Remote1" type="Node2D" parent="."]
 
 [node name="RayCast" type="RayCast2D" parent="Remote1"]
-position = Vector2(0, -500)
-target_position = Vector2(0, 1500)
+position = Vector2(0, -200)
+target_position = Vector2(0, 750)
 collision_mask = 4
 
 [node name="TailPoint" type="Sprite2D" parent="."]
@@ -18,15 +18,3 @@ modulate = Color(0, 0, 0, 1)
 z_index = 1
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("1_fiukj")
-
-[node name="Remote2" type="Node2D" parent="."]
-
-[node name="Raycast2Pivot" type="Node2D" parent="Remote2"]
-
-[node name="ConstantRotation" type="Node2D" parent="Remote2/Raycast2Pivot"]
-rotation = -1.5708
-
-[node name="RayCast2" type="RayCast2D" parent="Remote2/Raycast2Pivot/ConstantRotation"]
-position = Vector2(0, -500)
-target_position = Vector2(0, 1500)
-collision_mask = 4

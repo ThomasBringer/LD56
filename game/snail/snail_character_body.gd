@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-const SPEED = 1000
+const SPEED = 750
 var normal: Vector2
 var forward: Vector2
 var next_normal: Vector2
@@ -12,8 +12,9 @@ var next_forward: Vector2
 @onready var slow_rotator: Node2D = $"../Follower/SlowRotator"
 
 const ANGULAR_SHELL_SPEED: float = 15
-const ANGULAR_SHELL_SPEED_SLOW: float = 3
+const ANGULAR_SHELL_SPEED_SLOW: float = 5
 var target_angle: float = 0
+var input: float
 
 func _physics_process(delta: float) -> void:
 	while not is_on_wall():
@@ -22,7 +23,7 @@ func _physics_process(delta: float) -> void:
 		if is_on_wall():
 			update_forward()
 
-	var input := Input.get_axis("ui_left", "ui_right")
+	input = Input.get_axis("ui_left", "ui_right")
 	if not input:
 		velocity = Vector2.ZERO
 		rotate_smooth(delta)

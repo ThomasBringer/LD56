@@ -5,9 +5,9 @@
 [node name="Main" type="Node2D"]
 
 [node name="Snail" parent="." instance=ExtResource("1_77obm")]
-position = Vector2(1969, 888)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(-2258, -1109)
 collision_layer = 4
 collision_mask = 3
 
