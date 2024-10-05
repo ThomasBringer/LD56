@@ -22,8 +22,11 @@ jobs:
       - name: Download Godot export templates
         run: |
           wget https://downloads.tuxfamily.org/godotengine/4.3/Godot_v4.3-stable_export_templates.tpz -O export_templates.tpz
-          mkdir -p ~/.local/share/godot/templates/4.3.stable
-          unzip export_templates.tpz -d ~/.local/share/godot/templates/4.3.stable
+          mkdir -p ~/.local/share/godot/export_templates/4.3.stable
+          tar -xvf export_templates.tpz -C ~/.local/share/godot/export_templates/4.3.stable
+
+      - name: Set write permissions
+        run: chmod -R 777 .
 
       - name: Export game
         run: |
