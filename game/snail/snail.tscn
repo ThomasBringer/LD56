@@ -15,9 +15,11 @@ remote_path = NodePath("../../Follower")
 
 [node name="SnailShapeShell" parent="RigidBody2D" instance=ExtResource("2_whbvd")]
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." node_paths=PackedStringArray("ray_cast_left_array", "ray_cast_right_array")]
 motion_mode = 1
 script = ExtResource("4_8j8u1")
+ray_cast_left_array = [NodePath("../Follower/Forward/RayLeftPivot1/RayCastLeft1"), NodePath("../Follower/Forward/RayLeftPivot2/RayCastLeft2"), NodePath("../Follower/Forward/RayLeftPivot3/RayCastLeft3")]
+ray_cast_right_array = [NodePath("../Follower/Forward/RayRightPivot1/RayCastRight1"), NodePath("../Follower/Forward/RayRightPivot2/RayCastRight2"), NodePath("../Follower/Forward/RayRightPivot3/RayCastRight3")]
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="CharacterBody2D"]
 remote_path = NodePath("../../Follower")
@@ -31,12 +33,42 @@ texture = ExtResource("1_wplun")
 
 [node name="Forward" type="Node2D" parent="Follower"]
 
-[node name="RayPivot" type="Node2D" parent="Follower/Forward"]
+[node name="RayLeftPivot1" type="Node2D" parent="Follower/Forward"]
 
-[node name="RayCastRight" type="RayCast2D" parent="Follower/Forward/RayPivot"]
-position = Vector2(140, 0)
-target_position = Vector2(0, 300)
-
-[node name="RayCastLeft" type="RayCast2D" parent="Follower/Forward/RayPivot"]
+[node name="RayCastLeft1" type="RayCast2D" parent="Follower/Forward/RayLeftPivot1"]
 position = Vector2(-140, 0)
-target_position = Vector2(0, 300)
+target_position = Vector2(0, 500)
+
+[node name="RayLeftPivot2" type="Node2D" parent="Follower/Forward"]
+rotation = -0.698132
+
+[node name="RayCastLeft2" type="RayCast2D" parent="Follower/Forward/RayLeftPivot2"]
+position = Vector2(-175, 0)
+target_position = Vector2(0, 500)
+
+[node name="RayLeftPivot3" type="Node2D" parent="Follower/Forward"]
+rotation = -1.39626
+
+[node name="RayCastLeft3" type="RayCast2D" parent="Follower/Forward/RayLeftPivot3"]
+position = Vector2(-175, 0)
+target_position = Vector2(0, 500)
+
+[node name="RayRightPivot1" type="Node2D" parent="Follower/Forward"]
+
+[node name="RayCastRight1" type="RayCast2D" parent="Follower/Forward/RayRightPivot1"]
+position = Vector2(140, 0)
+target_position = Vector2(0, 500)
+
+[node name="RayRightPivot2" type="Node2D" parent="Follower/Forward"]
+rotation = 0.698132
+
+[node name="RayCastRight2" type="RayCast2D" parent="Follower/Forward/RayRightPivot2"]
+position = Vector2(175, 0)
+target_position = Vector2(0, 500)
+
+[node name="RayRightPivot3" type="Node2D" parent="Follower/Forward"]
+rotation = 1.39626
+
+[node name="RayCastRight3" type="RayCast2D" parent="Follower/Forward/RayRightPivot3"]
+position = Vector2(175, 0)
+target_position = Vector2(0, 500)
