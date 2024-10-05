@@ -1,9 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://b4muiwy510xda"]
+[gd_scene load_steps=6 format=3 uid="uid://b4muiwy510xda"]
 
 [ext_resource type="Script" path="res://snail/snail.gd" id="1_iyvp7"]
 [ext_resource type="Texture2D" uid="uid://b5v5wxpymaqnp" path="res://snail/snail.svg" id="1_wplun"]
 [ext_resource type="PackedScene" uid="uid://dm38ven40lraw" path="res://snail/snail_shell_shape.tscn" id="2_whbvd"]
 [ext_resource type="Script" path="res://snail/snail_character_body.gd" id="4_8j8u1"]
+
+[sub_resource type="Curve" id="Curve_ccvv7"]
+_data = [Vector2(0, 0), 0.0, 2.0, 0, 1, Vector2(0.5, 1), 2.0, 0.0, 1, 1, Vector2(1, 1), 0.0, 0.0, 1, 0]
+point_count = 3
 
 [node name="Snail" type="Node2D"]
 script = ExtResource("1_iyvp7")
@@ -26,7 +30,22 @@ remote_path = NodePath("../../Follower")
 
 [node name="Follower" type="Node2D" parent="."]
 
-[node name="ShellSprite" type="Sprite2D" parent="Follower"]
-texture = ExtResource("1_wplun")
-
 [node name="Forward" type="Node2D" parent="Follower"]
+
+[node name="Camera2D" type="Camera2D" parent="Follower"]
+position_smoothing_enabled = true
+
+[node name="Line2D" type="Line2D" parent="Follower"]
+points = PackedVector2Array(-150, 121, 136, 92, 168, -38)
+width = 75.0
+width_curve = SubResource("Curve_ccvv7")
+default_color = Color(1, 1, 0, 1)
+joint_mode = 2
+antialiased = true
+
+[node name="Rotator" type="Node2D" parent="Follower"]
+
+[node name="SmoothRotator" type="Node2D" parent="Follower"]
+
+[node name="ShellSprite" type="Sprite2D" parent="Follower/SmoothRotator"]
+texture = ExtResource("1_wplun")
