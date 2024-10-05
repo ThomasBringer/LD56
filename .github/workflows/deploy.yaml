@@ -1,77 +1,31 @@
-name: Build
+name: Export and Upload to itch.io
 
 on:
   push:
     branches:
       - main
-  pull_request:
 
 jobs:
-  Build:
-    runs-on: windows-latest
-    env:
-      BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
-      ITCH_USER: ${{ secrets.ITCH_USER }}
-      PROJECT_NAME: "ld56"
-      GODOT_VERSION: "4.3" # Manually set Godot version
+  build:
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Source Code
-        uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-      - name: Debug URL
-        run: |
-          echo "Downloading Godot from: https://downloads.tuxfamily.org/godotengine/4.3/Godot_v4.3-stable_win64.exe.zip"
-
-      - name: Download Godot
-        run: |
-          curl -v -L -o godot.zip https://downloads.tuxfamily.org/godotengine/4.3/Godot_v4.3-stable_win64.exe.zip
-          if ((Get-Item "godot.zip").Length -lt 1000) {
-            Write-Error "Godot download failed or file is too small."
-            exit 1
-          }
-          # Create a directory for Godot if it doesn't exist
-          New-Item -ItemType Directory -Path 'godot' -Force
-          powershell -Command "Expand-Archive -Path 'godot.zip' -DestinationPath 'godot'"
-
-      - name: Download Export Templates
-        run: |
-          curl -v -L -o export_templates.zip https://downloads.tuxfamily.org/godotengine/4.3/Godot_v4.3-stable_export_templates.tpz
-          if ((Get-Item "export_templates.zip").Length -lt 1000) {
-            Write-Error "Export templates download failed or file is too small."
-            exit 1
-          }
-          powershell -Command "Expand-Archive -Path 'export_templates.zip' -DestinationPath 'export_templates'"
-
-      - name: Setup Export Templates
-        run: |
-          mkdir -p $env:LOCALAPPDATA\share\godot\export_templates\4.3.stable
-          Copy-Item -Path export_templates\* -Destination $env:LOCALAPPDATA\share\godot\export_templates\4.3.stable
-
-      - name: Run Godot Export
-        run: |
-          .\godot\Godot_v4.3-stable_win64.exe --headless --export "HTML5" --export-path ../exports/html/index.html
-
-      - name: Upload Build Artifact
-        uses: actions/upload-artifact@v4
+      - name: Set up Godot
+        uses: firebelley/godot-export@v1
         with:
-          name: build-artifact
-          path: html/
+          godot-version: "4.3"
 
-      # Step to print the current working directory
-      - name: Print current directory
-        run: pwd
-
-      # Step to list all files in the current working directory
-      - name: List all files
-        run: Get-ChildItem -Recurse -File | Select-Object FullName
-
-      - name: Install Butler
+      - name: Export project
         run: |
-          curl -v -L -o butler.zip https://broth.itch.zone/butler/windows-amd64/15.21.0/archive-default.zip
-          New-Item -ItemType Directory -Path 'butler' -Force
-          powershell -Command "Expand-Archive -Path 'butler.zip' -DestinationPath 'butler'"
+          mkdir -p export
+          godot --export "HTML5" export/index.html
 
-      - name: Upload Build
-        run: |
-          .\butler\butler.exe push "..\exports\html\" "thomas-bringer/ld56:html" --userversion 1.0.0
+      - name: Upload to itch.io
+        uses: leafo/itchio-action@v1
+        with:
+          api_key: ${{ secrets.BUTLER_API_KEY }}
+          target: "user/game:html5"
+          file: "export/index.html"
