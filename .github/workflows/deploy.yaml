@@ -67,4 +67,4 @@ jobs:
 
       - name: Upload to itch.io
         run: |
-          .\butler\butler.exe push html/ "Thomas Bringer/ld56:windows" --userversion 1.0.0
+          .\butler\butler.exe push html/ "thomas-bringer/ld56" --userversion 1.0.0
