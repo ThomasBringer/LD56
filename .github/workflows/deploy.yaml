@@ -1,3 +1,5 @@
+name: Export and Upload to itch.io
+
 on:
   push:
     branches:
@@ -9,7 +11,7 @@ jobs:
     name: Export game to Github
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2.3.1
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
@@ -25,17 +27,20 @@ jobs:
           mkdir -p ~/.local/share/godot/templates/4.3.stable
           unzip export_templates.tpz -d ~/.local/share/godot/templates/4.3.stable
 
+      - name: Set permissions
+        run: |
+          chmod -R 777 ~/.local/share/godot/templates/4.3.stable
+
       - name: Export game
         run: |
-          ~/godot/Godot_v4.3-stable_linux.x86_64 --headless --export-release "Web" ./build/html/LD56.html
+          mkdir -p build/html
+          ~/godot/Godot_v4.3-stable_linux.x86_64 --headless --export-release "Web" build/html/LD56.html
         env:
           GITHUB_TOKEN: ${{ secrets.GH_KEY }}
 
       - name: Upload to itch.io
-        uses: manleydev/butler-publish-itchio-action@master
-        env:
-          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
-          CHANNEL: html
-          ITCH_GAME: ld56
-          ITCH_USER: thomas-bringer
-          PACKAGE: ./build/html
+        uses: game-ci/itchio-push@v1
+        with:
+          api_key: ${{ secrets.ITCHIO_API_KEY }}
+          target: "user/game:html5"
+          file: "build/html/LD56.html"
