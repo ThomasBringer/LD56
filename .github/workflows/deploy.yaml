@@ -27,7 +27,7 @@ jobs:
 
       - name: Export game
         run: |
-          ~/godot/Godot_v4.3-stable_linux.x86_64 --headless --export "Web" ./build/html/LD56.html
+          ~/godot/Godot_v4.3-stable_linux.x86_64 --headless --export-release "HTML" ./build/html/LD56.html
         env:
           GITHUB_TOKEN: ${{ secrets.GH_KEY }}
 
