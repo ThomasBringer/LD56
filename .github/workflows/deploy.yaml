@@ -44,4 +44,4 @@ jobs:
           CHANNEL: html
           ITCH_GAME: ld56
           ITCH_USER: thomas-bringer
-          PACKAGE: ./build/html
+          PACKAGE: ./exports/html
