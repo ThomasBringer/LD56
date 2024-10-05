@@ -22,10 +22,11 @@ jobs:
       - name: Download Godot export templates
         run: |
           wget https://downloads.tuxfamily.org/godotengine/4.3/Godot_v4.3-stable_export_templates.tpz -O 4.3.stable.tpz
+          mkdir -p ~/.local/share/godot/export_templates
           unzip 4.3.stable.tpz -d ~/.local/share/godot/export_templates
+          mv ~/.local/share/godot/export_templates/templates ~/.local/share/godot/export_templates/4.3.stable
       - name: Export game
         run: |
-          mv ~/.local/share/godot/export_templates/templates ~/.local/share/godot/export_templates/4.3.stable
           ~/godot/Godot_v4.3-stable_linux.x86_64 --headless --export-release "Web" ./build/html/LD56.html
         env:
           GITHUB_TOKEN: ${{ secrets.GH_KEY }}
