@@ -72,6 +72,6 @@ jobs:
           New-Item -ItemType Directory -Path 'butler' -Force
           powershell -Command "Expand-Archive -Path 'butler.zip' -DestinationPath 'butler'"
 
-      - name: Upload to itch.io
+      - name: Upload Build
         run: |
-          .\butler\butler.exe push ..\exports\html\ "thomas-bringer/ld56:html" --userversion 1.0.0
+          .\butler\butler.exe push $env:EXPORTS_PATH "thomas-bringer/ld56:html" --userversion 1.0.0 --api-key $env:BUTLER_API_KEY
