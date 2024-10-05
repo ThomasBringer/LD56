@@ -23,8 +23,12 @@ jobs:
         run: |
           wget https://downloads.tuxfamily.org/godotengine/4.3/Godot_v4.3-stable_export_templates.tpz -O export_templates.tpz
           mkdir -p ~/.local/share/godot/templates/4.3.stable
-          # Use unzip instead of tar
           unzip export_templates.tpz -d ~/.local/share/godot/templates/4.3.stable
+
+      - name: List export template contents
+        run: |
+          echo "Listing contents of the export template directory:"
+          ls ~/.local/share/godot/templates/4.3.stable
 
       - name: Verify export templates
         run: |
