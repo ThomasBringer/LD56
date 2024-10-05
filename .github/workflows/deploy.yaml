@@ -23,17 +23,17 @@ jobs:
         run: |
           wget https://downloads.tuxfamily.org/godotengine/4.3/Godot_v4.3-stable_export_templates.tpz -O 4.3.stable.tpz
           mkdir -p ~/.local/share/godot/export_templates
-          unzip 4.3.stable.tpz -d ~/.local/share/godot/export_templates
-          # Verify the contents and move the templates folder
-          if [ -d ~/.local/share/godot/export_templates/templates ]; then
-            mv ~/.local/share/godot/export_templates/templates ~/.local/share/godot/export_templates/4.3.stable
-          else
-            echo "Error: 'templates' folder not found after extraction"
-            exit 1
-          fi
+          unzip -o 4.3.stable.tpz -d ~/.local/share/godot/export_templates
+          # Rename the extracted folder to the expected version name
+          mv ~/.local/share/godot/export_templates/templates ~/.local/share/godot/export_templates/4.3.stable || { echo "Error: Could not rename templates folder."; exit 1; }
+
+      - name: Prepare output directory
+        run: |
+          mkdir -p ./build/html
+
       - name: Export game
         run: |
-          ~/godot/Godot_v4.3-stable_linux.x86_64 --headless --export-release "Web" ./build/html/LD56.html
+          ~/godot/Godot_v4.3-stable_linux.x86_64 --headless --export-release "Web" ./exports/html/LD56.html
         env:
           GITHUB_TOKEN: ${{ secrets.GH_KEY }}
 
