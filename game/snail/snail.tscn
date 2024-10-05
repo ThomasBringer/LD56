@@ -52,52 +52,73 @@ antialiased = true
 [node name="RemoteTail" type="Node2D" parent="Follower/Rotator"]
 position = Vector2(0, 125)
 
-[node name="RemoteTail1" type="RemoteTransform2D" parent="Follower/Rotator/RemoteTail"]
-position = Vector2(-125, 0)
-remote_path = NodePath("../../../../Tail/TailRayCast/Remote1")
+[node name="Centre1" type="Node2D" parent="Follower/Rotator/RemoteTail"]
+position = Vector2(0, 125)
+
+[node name="RemoteTail1" type="RemoteTransform2D" parent="Follower/Rotator/RemoteTail/Centre1"]
+position = Vector2(0, -125)
+remote_path = NodePath("../../../../../Tail/TailRayCast/Remote1")
 update_scale = false
 
-[node name="RemoteTail1DontRotate" type="RemoteTransform2D" parent="Follower/Rotator/RemoteTail/RemoteTail1"]
-remote_path = NodePath("../../../../../Tail/TailRayCast/Remote2")
+[node name="RemoteTail1DontRotate" type="RemoteTransform2D" parent="Follower/Rotator/RemoteTail/Centre1/RemoteTail1"]
+remote_path = NodePath("../../../../../../Tail/TailRayCast/Remote2")
 update_rotation = false
 update_scale = false
 
-[node name="RemoteTail2" type="RemoteTransform2D" parent="Follower/Rotator/RemoteTail"]
-position = Vector2(-62, 0)
-remote_path = NodePath("../../../../Tail/TailRayCast2/Remote1")
+[node name="Centre2" type="Node2D" parent="Follower/Rotator/RemoteTail"]
+position = Vector2(0, 125)
+rotation = -0.523599
+
+[node name="RemoteTail2" type="RemoteTransform2D" parent="Follower/Rotator/RemoteTail/Centre2"]
+position = Vector2(0, -125)
+remote_path = NodePath("../../../../../Tail/TailRayCast2/Remote1")
 update_scale = false
 
-[node name="RemoteTail2DontRotate" type="RemoteTransform2D" parent="Follower/Rotator/RemoteTail/RemoteTail2"]
-remote_path = NodePath("../../../../../Tail/TailRayCast2/Remote2")
+[node name="RemoteTail2DontRotate" type="RemoteTransform2D" parent="Follower/Rotator/RemoteTail/Centre2/RemoteTail2"]
+remote_path = NodePath("../../../../../../Tail/TailRayCast2/Remote2")
 update_rotation = false
 update_scale = false
 
-[node name="RemoteTail3" type="RemoteTransform2D" parent="Follower/Rotator/RemoteTail"]
-remote_path = NodePath("../../../../Tail/TailRayCast3/Remote1")
+[node name="Centre3" type="Node2D" parent="Follower/Rotator/RemoteTail"]
+position = Vector2(0, 125)
+rotation = 0.523599
+
+[node name="RemoteTail3" type="RemoteTransform2D" parent="Follower/Rotator/RemoteTail/Centre3"]
+position = Vector2(-1, -123.268)
+remote_path = NodePath("../../../../../Tail/TailRayCast3/Remote1")
 update_scale = false
 
-[node name="RemoteTail3DontRotate" type="RemoteTransform2D" parent="Follower/Rotator/RemoteTail/RemoteTail3"]
-remote_path = NodePath("../../../../../Tail/TailRayCast3/Remote2")
+[node name="RemoteTail3DontRotate" type="RemoteTransform2D" parent="Follower/Rotator/RemoteTail/Centre3/RemoteTail3"]
+position = Vector2(-0.5, 0.86602)
+remote_path = NodePath("../../../../../../Tail/TailRayCast3/Remote2")
 update_rotation = false
 update_scale = false
 
-[node name="RemoteTail4" type="RemoteTransform2D" parent="Follower/Rotator/RemoteTail"]
-position = Vector2(62, 0)
-remote_path = NodePath("../../../../Tail/TailRayCast4/Remote1")
+[node name="Centre4" type="Node2D" parent="Follower/Rotator/RemoteTail"]
+position = Vector2(0, 125)
+rotation = -1.0472
+
+[node name="RemoteTail4" type="RemoteTransform2D" parent="Follower/Rotator/RemoteTail/Centre4"]
+position = Vector2(0, -125)
+remote_path = NodePath("../../../../../Tail/TailRayCast4/Remote1")
 update_scale = false
 
-[node name="RemoteTail4DontRotate" type="RemoteTransform2D" parent="Follower/Rotator/RemoteTail/RemoteTail4"]
-remote_path = NodePath("../../../../../Tail/TailRayCast4/Remote2")
+[node name="RemoteTail4DontRotate" type="RemoteTransform2D" parent="Follower/Rotator/RemoteTail/Centre4/RemoteTail4"]
+remote_path = NodePath("../../../../../../Tail/TailRayCast4/Remote2")
 update_rotation = false
 update_scale = false
 
-[node name="RemoteTail5" type="RemoteTransform2D" parent="Follower/Rotator/RemoteTail"]
-position = Vector2(125, 0)
-remote_path = NodePath("../../../../Tail/TailRayCast5/Remote1")
+[node name="Centre5" type="Node2D" parent="Follower/Rotator/RemoteTail"]
+position = Vector2(0, 125)
+rotation = 1.0472
+
+[node name="RemoteTail5" type="RemoteTransform2D" parent="Follower/Rotator/RemoteTail/Centre5"]
+position = Vector2(-0.5, -124.134)
+remote_path = NodePath("../../../../../Tail/TailRayCast5/Remote1")
 update_scale = false
 
-[node name="RemoteTail5DontRotate" type="RemoteTransform2D" parent="Follower/Rotator/RemoteTail/RemoteTail5"]
-remote_path = NodePath("../../../../../Tail/TailRayCast5/Remote2")
+[node name="RemoteTail5DontRotate" type="RemoteTransform2D" parent="Follower/Rotator/RemoteTail/Centre5/RemoteTail5"]
+remote_path = NodePath("../../../../../../Tail/TailRayCast5/Remote2")
 update_rotation = false
 update_scale = false
 
@@ -114,16 +135,53 @@ position = Vector2(0, 125)
 [node name="TailRayCast" parent="Tail" instance=ExtResource("4_8anxc")]
 position = Vector2(-125, 0)
 
+[node name="Remote1" parent="Tail/TailRayCast" index="0"]
+position = Vector2(62.5, 17.7468)
+rotation = -0.523599
+
+[node name="Remote2" parent="Tail/TailRayCast" index="2"]
+position = Vector2(62.5, 17.7468)
+
 [node name="TailRayCast2" parent="Tail" instance=ExtResource("4_8anxc")]
 position = Vector2(-62, 0)
 
+[node name="Remote1" parent="Tail/TailRayCast2" index="0"]
+position = Vector2(-0.5, 16.7468)
+rotation = -0.523599
+scale = Vector2(1, 1)
+
+[node name="Remote2" parent="Tail/TailRayCast2" index="2"]
+position = Vector2(-0.5, 16.7468)
+
 [node name="TailRayCast3" parent="Tail" instance=ExtResource("4_8anxc")]
+
+[node name="Remote1" parent="Tail/TailRayCast3" index="0"]
+position = Vector2(60.7679, 17.7468)
+rotation = 0.523599
+
+[node name="Remote2" parent="Tail/TailRayCast3" index="2"]
+position = Vector2(59.9019, 18.2468)
 
 [node name="TailRayCast4" parent="Tail" instance=ExtResource("4_8anxc")]
 position = Vector2(62, 0)
 
+[node name="Remote1" parent="Tail/TailRayCast4" index="0"]
+position = Vector2(-170.253, 62.5)
+rotation = -1.0472
+scale = Vector2(1, 1)
+
+[node name="Remote2" parent="Tail/TailRayCast4" index="2"]
+position = Vector2(-170.253, 62.5)
+
 [node name="TailRayCast5" parent="Tail" instance=ExtResource("4_8anxc")]
 position = Vector2(125, 0)
+
+[node name="Remote1" parent="Tail/TailRayCast5" index="0"]
+position = Vector2(-17.7468, 62.5)
+rotation = 1.0472
+
+[node name="Remote2" parent="Tail/TailRayCast5" index="2"]
+position = Vector2(-17.7468, 62.5)
 
 [editable path="Tail/TailRayCast"]
 [editable path="Tail/TailRayCast2"]

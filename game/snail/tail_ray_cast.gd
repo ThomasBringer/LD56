@@ -12,7 +12,12 @@ func _physics_process(delta: float) -> void:
 		normal = ray_cast.get_collision_normal()
 		if normal:
 			raycast_2_pivot.rotation = (-normal).angle()
-			tail_point.global_position = ray_cast_2.get_collision_point()
+			if ray_cast_2.is_colliding():
+				tail_point.global_position = ray_cast_2.get_collision_point()
+	#else:
+		#raycast_2_pivot.rotation = (-normal).angle() - PI / 4
+		#if ray_cast_2.is_colliding():
+			#tail_point.global_position = ray_cast_2.get_collision_point()
 
 #func _physics_process(delta: float) -> void:
 	#if normal:
