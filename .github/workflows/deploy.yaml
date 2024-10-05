@@ -19,13 +19,36 @@ jobs:
           unzip godot.zip -d ~/godot
           chmod +x ~/godot/Godot_v4.3-stable_linux.x86_64
 
+      - name: Install p7zip
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y p7zip-full
+
       - name: Download Godot export templates
         run: |
           wget https://downloads.tuxfamily.org/godotengine/4.3/Godot_v4.3-stable_export_templates.tpz -O export_templates.tpz
-          unzip export_templates.tpz -d ~/.local/share/godot/
+          mkdir -p ~/.local/share/godot/export_templates/4.3.stable
+          7z x export_templates.tpz -o~/.local/share/godot/export_templates/4.3.stable
+
+      - name: List export template contents
+        run: |
+          echo "Listing contents of the export template directory:"
+          ls ~/.local/share/godot/export_templates/4.3.stable
+
+      - name: Verify export templates
+        run: |
+          if [ ! -f ~/.local/share/godot/export_templates/4.3.stable/web_nothreads_debug.zip ]; then
+            echo "Missing web_nothreads_debug.zip template."
+            exit 1
+          fi
+          if [ ! -f ~/.local/share/godot/export_templates/4.3.stable/web_nothreads_release.zip ]; then
+            echo "Missing web_nothreads_release.zip template."
+            exit 1
+          fi
 
       - name: Export game
         run: |
+          mkdir -p ./build/html  # Ensure the output directory exists
           ~/godot/Godot_v4.3-stable_linux.x86_64 --headless --export-release "Web" ./build/html/LD56.html
         env:
           GITHUB_TOKEN: ${{ secrets.GH_KEY }}
