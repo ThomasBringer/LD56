@@ -24,22 +24,6 @@ jobs:
           wget https://downloads.tuxfamily.org/godotengine/4.3/Godot_v4.3-stable_export_templates.tpz -O export_templates.tpz
           unzip export_templates.tpz -d ~/.local/share/godot/
 
-      - name: List export template contents
-        run: |
-          echo "Listing contents of the export template directory:"
-          ls ~/.local/share/godot/templates/4.3.stable
-
-      - name: Verify export templates
-        run: |
-          if [ ! -f ~/.local/share/godot/templates/4.3.stable/web_nothreads_debug.zip ]; then
-            echo "Missing web_nothreads_debug.zip template."
-            exit 1
-          fi
-          if [ ! -f ~/.local/share/godot/templates/4.3.stable/web_nothreads_release.zip ]; then
-            echo "Missing web_nothreads_release.zip template."
-            exit 1
-          fi
-
       - name: Export game
         run: |
           ~/godot/Godot_v4.3-stable_linux.x86_64 --headless --export-release "Web" ./build/html/LD56.html
