@@ -24,11 +24,17 @@ window/size/viewport_height=2160
 window/size/mode=4
 window/stretch/mode="canvas_items"
 
+[global_group]
+
+plantpart=""
+
 [layer_names]
 
 2d_physics/layer_1="SnailRigid"
 2d_physics/layer_2="SnailCharacter"
 2d_physics/layer_3="World"
+2d_physics/layer_4="PlantDetector"
+2d_physics/layer_5="Plant"
 
 [physics]
 

@@ -17,6 +17,16 @@ const ANGULAR_SHELL_SPEED_SLOW: float = 5
 var target_angle: float = 0
 var input: float
 
+#func manage_plants(delta: float) -> void:
+	#var collision: KinematicCollision2D = get_last_slide_collision()
+	#if collision:
+		#var collider = collision.get_collider()
+		#if collider.is_in_group("plantpart"):
+			#collider.on_player_here(delta)
+	#
+	#for plant in get_tree().get_nodes_in_group("plantpart"):
+		#plant.on_player_everyone(delta)
+
 func _physics_process(delta: float) -> void:
 	if not is_on_wall():
 		velocity.x = 0
@@ -25,6 +35,8 @@ func _physics_process(delta: float) -> void:
 		if is_on_wall():
 			update_forward()
 		return
+	
+	#manage_plants(delta)
 	
 	input = Input.get_axis("ui_left", "ui_right")
 	if not input:

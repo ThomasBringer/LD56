@@ -1,11 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://2wqowd4uydil"]
+[gd_scene load_steps=4 format=3 uid="uid://2wqowd4uydil"]
 
 [ext_resource type="PackedScene" uid="uid://b4muiwy510xda" path="res://snail/snail.tscn" id="1_77obm"]
 [ext_resource type="Script" path="res://misc/show_polygon.gd" id="2_n5stn"]
+[ext_resource type="PackedScene" uid="uid://ratt0b7hrhxs" path="res://plant/plant_part.tscn" id="4_orsdx"]
 
 [node name="Main" type="Node2D"]
 
 [node name="Snail" parent="." instance=ExtResource("1_77obm")]
+unique_name_in_owner = true
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(-2258, -1109)
@@ -19,3 +21,15 @@ script = ExtResource("2_n5stn")
 [node name="Polygon2D" type="Polygon2D" parent="StaticBody2D/CollisionPolygon2D"]
 z_index = -10
 color = Color(0.165656, 0.165656, 0.165656, 1)
+
+[node name="PlantPart" parent="." instance=ExtResource("4_orsdx")]
+position = Vector2(-1000, 0)
+rotation = 0.174533
+
+[node name="PlantPart2" parent="PlantPart" instance=ExtResource("4_orsdx")]
+position = Vector2(0, -250)
+rotation = 0.174533
+
+[node name="PlantPart3" parent="PlantPart/PlantPart2" instance=ExtResource("4_orsdx")]
+position = Vector2(0, -250)
+rotation = 0.174533

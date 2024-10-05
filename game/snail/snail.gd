@@ -32,3 +32,11 @@ func _input(event):
 		Is_Shelled = true
 	elif event.is_action_released("ui_accept"):
 		Is_Shelled = false
+
+
+func _on_plant_entered(body: Node2D) -> void:
+	pass # Replace with function body.
+
+
+func _on_plant_exited(body: Node2D) -> void:
+	pass # Replace with function body.
