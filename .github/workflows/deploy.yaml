@@ -11,10 +11,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Godot
-        uses: firebelley/godot-export@v1
+        uses: josephbmanley/godot-export@v1.0.0
         with:
           godot-version: "4.3"
 
@@ -24,7 +24,7 @@ jobs:
           godot --export "HTML5" export/index.html
 
       - name: Upload to itch.io
-        uses: leafo/itchio-action@v1
+        uses: game-ci/itchio-push@v1
         with:
           api_key: ${{ secrets.BUTLER_API_KEY }}
           target: "user/game:html5"
