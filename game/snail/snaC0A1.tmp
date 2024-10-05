@@ -19,6 +19,7 @@ collision_mask = 4
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="RigidBody2D"]
 remote_path = NodePath("../../Follower")
+update_rotation = false
 update_scale = false
 
 [node name="SnailShapeShell" parent="RigidBody2D" instance=ExtResource("2_whbvd")]
@@ -31,6 +32,7 @@ script = ExtResource("4_8j8u1")
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="CharacterBody2D"]
 remote_path = NodePath("../../Follower")
+update_rotation = false
 update_scale = false
 
 [node name="SnailShapeShell" parent="CharacterBody2D" instance=ExtResource("2_whbvd")]

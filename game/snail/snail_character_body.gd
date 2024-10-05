@@ -10,6 +10,7 @@ var next_forward: Vector2
 @onready var rotator_node: Node2D = $"../Follower/Rotator"
 @onready var smooth_rotator: Node2D = $"../Follower/SmoothRotator"
 @onready var slow_rotator: Node2D = $"../Follower/SlowRotator"
+@onready var follower: Node2D = $"../Follower"
 
 const ANGULAR_SHELL_SPEED: float = 15
 const ANGULAR_SHELL_SPEED_SLOW: float = 5
@@ -75,5 +76,12 @@ func update_forward():
 	if collision:
 		normal = collision.get_normal().normalized()
 		forward = -normal.orthogonal().normalized()
-		rotator_node.rotation = forward.angle()
-		smooth_rotator.rotation = forward.angle()
+		target_angle = forward.angle()
+		#rotator_node.rotation = forward.angle()
+		#smooth_rotator.rotation = forward.angle()
+
+func transition(body_rotation):
+	rotator_node.rotation += follower.rotation
+	smooth_rotator.rotation += follower.rotation
+	slow_rotator.rotation += follower.rotation
+	follower.rotation = 0
