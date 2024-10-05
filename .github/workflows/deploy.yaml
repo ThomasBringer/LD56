@@ -27,22 +27,15 @@ jobs:
           # Rename the extracted folder to the expected version name
           mv ~/.local/share/godot/export_templates/templates ~/.local/share/godot/export_templates/4.3.stable || { echo "Error: Could not rename templates folder."; exit 1; }
 
-      - name: Set permissions
-        run: |
-          chmod -R 777 ~/.local/share/godot/export_templates
-          chmod -R 777 .
-
       - name: Prepare output directory
         run: |
           mkdir -p ./exports/html
 
       - name: Export game
         run: |
-          ~/godot/Godot_v4.3-stable_linux.x86_64 --headless --export-release "Web" ./exports/html/LD56.html
+          ~/godot/Godot_v4.3-stable_linux.x86_64 --headless --path game --export-release "Web" ../exports/html/LD56.html
         env:
           GITHUB_TOKEN: ${{ secrets.GH_KEY }}
-          GODOT_USE_PATHS: "true"
-          GODOT_TEMPLATES_PATH: ~/.local/share/godot/export_templates/4.3.stable
 
       - name: Upload to itch.io
         uses: manleydev/butler-publish-itchio-action@master
