@@ -6,14 +6,14 @@ on:
 jobs:
   export_game:
     runs-on: ubuntu-latest
-    name: export game to github
+    name: Export game to Github
     steps:
       - name: Checkout code
         uses: actions/checkout@v2.3.1
         with:
           fetch-depth: 0
 
-      - name: download godot
+      - name: Download Godot
         run: |
           wget https://downloads.tuxfamily.org/godotengine/4.3/Godot_v4.3-stable_linux.x86_64.zip -O godot.zip
           unzip godot.zip -d ~/godot
@@ -24,18 +24,18 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y p7zip-full
 
-      - name: download godot export templates
+      - name: Download Godot export templates
         run: |
           wget https://downloads.tuxfamily.org/godotengine/4.3/Godot_v4.3-stable_export_templates.tpz -O export_templates.tpz
-          mkdir -p ~/.local/share/godot/export_templates/4.3.stable
+          # Extract directly into the correct directory
           7z x export_templates.tpz -o~/.local/share/godot/export_templates/4.3.stable
 
-      - name: list export template contents
+      - name: List export template contents
         run: |
           echo "Listing contents of the export template directory:"
           ls ~/.local/share/godot/export_templates/4.3.stable
 
-      - name: verify export templates
+      - name: Verify export templates
         run: |
           if [ ! -f ~/.local/share/godot/export_templates/4.3.stable/web_nothreads_debug.zip ]; then
             echo "Missing web_nothreads_debug.zip template."
@@ -46,14 +46,14 @@ jobs:
             exit 1
           fi
 
-      - name: export game
+      - name: Export game
         run: |
           mkdir -p ./build/html  # Ensure the output directory exists
           ~/godot/Godot_v4.3-stable_linux.x86_64 --headless --export-release "Web" ./build/html/LD56.html
         env:
           GITHUB_TOKEN: ${{ secrets.GH_KEY }}
 
-      - name: upload to itch.io
+      - name: Upload to itch.io
         uses: manleydev/butler-publish-itchio-action@master
         env:
           BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
