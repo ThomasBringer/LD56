@@ -31,7 +31,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_KEY }}
           ACTIONS_ALLOW_UNSECURE_COMMANDS: "true"
-
       - name: upload to itchio
         uses: manleydev/butler-publish-itchio-action@master
         env:
