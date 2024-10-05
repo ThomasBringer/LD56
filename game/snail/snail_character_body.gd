@@ -18,26 +18,28 @@ var target_angle: float = 0
 var input: float
 
 func _physics_process(delta: float) -> void:
-	while not is_on_wall():
-		velocity = 1000 * Vector2.DOWN
+	if not is_on_wall():
+		velocity.x = 0
+		velocity.y += get_gravity().y * delta
 		move_and_slide()
 		if is_on_wall():
 			update_forward()
-
+		return
+	
 	input = Input.get_axis("ui_left", "ui_right")
 	if not input:
 		velocity = Vector2.ZERO
 		rotate_smooth(delta)
 		return
-	
+
 	var backup_pos: Vector2 = position
-	
+
 	for i in get_slide_collision_count():
 		var collision = get_slide_collision(i)
 		normal = collision.get_normal().normalized()
 		forward = -normal.orthogonal().normalized()
 		#forward_node.rotation = forward.angle()
-	
+
 		velocity = SPEED * input * forward - 1 / delta * normal
 		
 		move_and_slide()
@@ -77,8 +79,7 @@ func update_forward():
 		normal = collision.get_normal().normalized()
 		forward = -normal.orthogonal().normalized()
 		target_angle = forward.angle()
-		#rotator_node.rotation = forward.angle()
-		#smooth_rotator.rotation = forward.angle()
+		rotator_node.rotation = target_angle
 
 func transition(body_rotation):
 	rotator_node.rotation += follower.rotation

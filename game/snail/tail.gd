@@ -29,21 +29,20 @@ func get_head_offset_relative() -> Vector2:
 @onready var snail: Node2D = $"../../.."
 
 @onready var character_body: CharacterBody2D = $"../../../CharacterBody2D"
+@onready var rigid_body: RigidBody2D = $"../../../RigidBody2D"
 
 @onready var rotator: Node2D = $"../../Rotator"
 
 const DISTANCE: float = 60
 const SPEED: float = 20
-const SPEED_MAX: float = 5000000000000
-#const SPEED: float = 20
 #const SPEED_MAX: float = 1250
 var point_moved_count: int = 0
 var last_delta: float
 var last_input: float = 1
 
-
-func _physics_process(delta: float) -> void:
-	self.last_delta = delta
+var is_shelled: bool:
+	get:
+		return snail.is_shelled
 
 func _ready() -> void:
 	tail_ray_cast1.moved_tail_point.connect(_on_point_moved)
@@ -51,6 +50,37 @@ func _ready() -> void:
 	tail_ray_cast3.moved_tail_point.connect(_on_point_moved)
 	tail_ray_cast4.moved_tail_point.connect(_on_point_moved)
 	tail_ray_cast5.moved_tail_point.connect(_on_point_moved)
+	
+func _physics_process(delta: float) -> void:
+	self.last_delta = delta
+	if is_shelled:
+		shelled_process()
+		return
+	if not character_body.is_on_wall():
+		not_shelled_air_process()
+		return
+
+func shelled_process():
+	for p in 4:
+		move_line_point_towards(line_trail, p, rigid_body.global_position, last_delta)
+	
+	var head_base: Vector2 = move_line_point_towards(line_trail, 4, rigid_body.global_position + 50*Vector2.DOWN.rotated(rotator.global_rotation), last_delta)
+	
+	head_trail.set_point_position(0, head_base)
+	var eye_base: Vector2 = move_line_point_towards(
+		head_trail, 1,
+		head_base +  50*Vector2.DOWN.rotated(rotator.global_rotation),
+		last_delta)
+	eye_trail_left.set_point_position(0, eye_base)
+	eye_trail_right.set_point_position(0, eye_base)
+	move_line_point_towards(eye_trail_left, 1, eye_base + (eye_left_offset* Vector2(1, -1)).rotated(rotator.global_rotation), last_delta)
+	move_line_point_towards(eye_trail_right, 1, eye_base + (eye_right_offset* Vector2(1, -1)).rotated(rotator.global_rotation), last_delta)
+
+func not_shelled_air_process():
+	for p in range(4):
+		move_line_point_towards(line_trail, p, points[p].global_position, last_delta)
+	var head_base: Vector2 = move_line_point_towards(line_trail, 4, points[4].global_position, last_delta)
+	move_head(head_base)
 
 func _on_point_moved():
 	point_moved_count += 1
@@ -112,17 +142,18 @@ func update_tail_left():
 		move_point(4 - p, p)
 	var head_base: Vector2 = move_point(4, 0)
 	move_head(head_base)
+@onready var smooth_rotator: Node2D = $"../../SmoothRotator"
 
 func move_head(head_base: Vector2):
 	head_trail.set_point_position(0, head_base)
 	var eye_base: Vector2 = move_line_point_towards(
 		head_trail, 1,
-		head_base +  get_head_offset_relative().rotated(rotator.rotation),
+		head_base +  get_head_offset_relative().rotated(rotator.global_rotation),
 		last_delta)
 	eye_trail_left.set_point_position(0, eye_base)
 	eye_trail_right.set_point_position(0, eye_base)
-	move_line_point_towards(eye_trail_left, 1, eye_base + eye_left_offset.rotated(rotator.rotation), last_delta)
-	move_line_point_towards(eye_trail_right, 1, eye_base + eye_right_offset.rotated(rotator.rotation), last_delta)
+	move_line_point_towards(eye_trail_left, 1, eye_base + eye_left_offset.rotated(rotator.global_rotation), last_delta)
+	move_line_point_towards(eye_trail_right, 1, eye_base + eye_right_offset.rotated(rotator.global_rotation), last_delta)
 
 func move_point(p1: int, p2: int):
 	return move_line_point_towards(line_trail, p1, points[p2].global_position, last_delta)
@@ -130,8 +161,8 @@ func move_point(p1: int, p2: int):
 func move_line_point_towards(line: Line2D, i: int, pos: Vector2, delta: float):
 	var start: Vector2 = line.get_point_position(i)
 	var vel: Vector2 = (pos - snail.global_position - start) * SPEED
-	if vel.length() > SPEED_MAX:
-		vel = SPEED_MAX * vel.normalized()
+	#if vel.length() > SPEED_MAX:
+		#vel = SPEED_MAX * vel.normalized()
 	var result: Vector2 = start + vel * delta
 	line.set_point_position(i, result)
 	return result

@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://2wqowd4uydil"]
+[gd_scene load_steps=3 format=3 uid="uid://2wqowd4uydil"]
 
 [ext_resource type="PackedScene" uid="uid://b4muiwy510xda" path="res://snail/snail.tscn" id="1_77obm"]
+[ext_resource type="Script" path="res://misc/show_polygon.gd" id="2_n5stn"]
 
 [node name="Main" type="Node2D"]
 
@@ -13,3 +14,8 @@ collision_mask = 3
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 polygon = PackedVector2Array(1295, 978, 1644, 1602, 2381, 1754, 3157, 1467, 3542, 647, 4467, 342, 4548, -134, 3901, -71, 1883, 84, 1696, -238, 3264, -861, 6092, 37, 4654, 938, 3422, 2281, 2197, 2344, 1080, 2417, 1448, 2081, 866, 1243, 706, 1723, 396, 1884, 388, 978, 622, 726)
+script = ExtResource("2_n5stn")
+
+[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D/CollisionPolygon2D"]
+z_index = -10
+color = Color(0.165656, 0.165656, 0.165656, 1)
