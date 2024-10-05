@@ -9,9 +9,11 @@ var next_forward: Vector2
 #@onready var forward_node: Node2D = $"../Follower/Forward"
 @onready var rotator_node: Node2D = $"../Follower/Rotator"
 @onready var smooth_rotator: Node2D = $"../Follower/SmoothRotator"
+@onready var slow_rotator: Node2D = $"../Follower/SlowRotator"
 
 const ANGULAR_SHELL_SPEED: float = 15
-var angle: float = 0
+const ANGULAR_SHELL_SPEED_SLOW: float = 3
+var target_angle: float = 0
 
 func _physics_process(delta: float) -> void:
 	while not is_on_wall():
@@ -42,22 +44,25 @@ func _physics_process(delta: float) -> void:
 				velocity = -1000 * normal
 				move_and_slide()
 			var dpos: Vector2 = (position - backup_pos) * sign(input)
-			angle = dpos.angle()
-			rotator_node.rotation = angle
+			target_angle = dpos.angle()
+			rotator_node.rotation = target_angle
 			
 			#angle_vel = (angle - smooth_rotator.rotation) / ANGULAR_SHELL_DURATION
 			#smooth_rotator.rotate(angle_vel * delta)
 			rotate_smooth(delta)
 			return
 
-	
 func rotate_smooth(delta: float):
-	var short: float = short_angle(smooth_rotator.rotation, angle)
-	var dangle: float = short * ANGULAR_SHELL_SPEED * delta
+	rotate_smooth_node(smooth_rotator, ANGULAR_SHELL_SPEED, delta)
+	rotate_smooth_node(slow_rotator, ANGULAR_SHELL_SPEED_SLOW, delta)
+
+func rotate_smooth_node(node: Node2D, speed: float, delta: float):
+	var short: float = short_angle(node.rotation, target_angle)
+	var dangle: float = short * speed * delta
 	if abs(dangle) > abs(short):
-		smooth_rotator.rotation = angle
+		node.rotation = target_angle
 	else:
-		smooth_rotator.rotate(dangle)
+		node.rotate(dangle)
 
 func short_angle(from, to)-> float:
 	var max_angle = PI * 2
