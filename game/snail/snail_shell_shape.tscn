@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://dm38ven40lraw"]
+
+[ext_resource type="Shape2D" uid="uid://ci3sgjjrws4my" path="res://snail/snail_shell_shape.tres" id="1_ece38"]
+
+[node name="SnailShapeShell" type="CollisionShape2D"]
+shape = ExtResource("1_ece38")
+debug_color = Color(0.955241, 0, 0.544243, 0.42)
