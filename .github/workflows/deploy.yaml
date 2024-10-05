@@ -26,19 +26,6 @@ jobs:
           # Use unzip without 7zip
           unzip export_templates.tpz -d ~/.local/share/godot/export_templates/4.3.stable
 
-      - name: Verify export templates
-        run: |
-          echo "Listing contents of the export template directory:"
-          ls ~/.local/share/godot/export_templates/4.3.stable
-          if [ ! -f ~/.local/share/godot/export_templates/4.3.stable/web_nothreads_debug.zip ]; then
-            echo "Missing web_nothreads_debug.zip template."
-            exit 1
-          fi
-          if [ ! -f ~/.local/share/godot/export_templates/4.3.stable/web_nothreads_release.zip ]; then
-            echo "Missing web_nothreads_release.zip template."
-            exit 1
-          fi
-
       - name: Export game
         run: |
           ~/godot/Godot_v4.3-stable_linux.x86_64 --headless --export-release "Web" ./build/html/LD56.html
