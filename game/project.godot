@@ -29,6 +29,7 @@ window/stretch/mode="canvas_items"
 plantpart=""
 plantpoint=""
 stopper=""
+snailrigid=""
 
 [input]
 

@@ -46,7 +46,7 @@ stream_0/stream = ExtResource("11_8gx5u")
 [node name="Snail" type="Node2D"]
 script = ExtResource("1_iyvp7")
 
-[node name="RigidBody2D" type="RigidBody2D" parent="."]
+[node name="RigidBody2D" type="RigidBody2D" parent="." groups=["snailrigid"]]
 collision_mask = 116
 contact_monitor = true
 max_contacts_reported = 1
@@ -196,6 +196,10 @@ stream = ExtResource("10_u2pol")
 [node name="AudioWoosh" type="AudioStreamPlayer" parent="Audio"]
 stream = SubResource("AudioStreamRandomizer_62e4r")
 volume_db = 3.0
+
+[node name="MushroomTimer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
 
 [connection signal="body_entered" from="RigidBody2D" to="RigidBody2D" method="_on_collision"]
 [connection signal="body_exited" from="RigidBody2D" to="RigidBody2D" method="_on_body_exited"]

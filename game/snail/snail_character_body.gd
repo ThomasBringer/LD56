@@ -20,6 +20,8 @@ var input: float
 @onready var audio_woosh: AudioStreamPlayer = $"../Audio/AudioWoosh"
 @onready var audio_out_shell: AudioStreamPlayer = $"../Audio/AudioOutShell"
 
+@onready var rigid_body: RigidBody2D = $"../RigidBody2D"
+
 var started_falling: bool = true
 
 var input_multiplier: int = 1
@@ -41,28 +43,29 @@ var first_sound_impact: bool = true
 var last_wall_collision: KinematicCollision2D
 var last_nonzero_input: float = 1
 
+@onready var mushroom_timer: Timer = $"../MushroomTimer"
+
 func _physics_process(delta: float) -> void:
-	match is_on_wall_no_stopper():
-		WALLED.IN_AIR:
-			if not started_falling:
-				started_falling = true
-				#if not first_sound_impact: 
-					#audio_woosh.play()
-			velocity.x = 0
-			velocity.y += get_gravity().y * delta
-			move_and_slide()
-			if is_on_wall():
-				if not audio_out_shell.playing:
-					if first_sound_impact:
-						first_sound_impact = false
-					else:
-						audio_impact.play()
-				if slithering and not audio_slither.playing:
-					audio_slither.play()
-				update_forward()
-			else:
-				clamp_pos()
-				return
+	if is_on_wall_no_stopper() == WALLED.IN_AIR or not mushroom_timer.is_stopped():
+		if not started_falling:
+			started_falling = true
+			#if not first_sound_impact: 
+				#audio_woosh.play()
+		#velocity.x = 0
+		velocity.y += get_gravity().y * delta
+		move_and_slide()
+		if is_on_wall():
+			if not audio_out_shell.playing:
+				if first_sound_impact:
+					first_sound_impact = false
+				else:
+					audio_impact.play()
+			if slithering and not audio_slither.playing:
+				audio_slither.play()
+			update_forward()
+		else:
+			clamp_pos()
+			return
 		#WALLED.ON_STOPPER:
 			#pass
 		
@@ -138,6 +141,7 @@ func move(col: KinematicCollision2D, delta: float, backup_pos: Vector2, rot: boo
 	#return false
 
 func clamp_pos():
+	return
 	on_boundary = position.x < b_left or position.x > b_right
 	if on_boundary:
 		audio_slither.stop()
@@ -192,3 +196,8 @@ func transition(body_rotation):
 	slow_rotator.rotation += follower.rotation
 	follower.rotation = 0
 	first_sound_impact = false
+	velocity = rigid_body.linear_velocity
+
+func mushroom(v: Vector2):
+	velocity = v
+	mushroom_timer.start()

@@ -11,7 +11,7 @@ var last_vel: Vector2 = Vector2.ZERO
 
 func _on_collision(body: Node) -> void:
 	if audio_impact.playing: return
-	audio_impact.volume_db = lerp(-15, 0, last_vel.length()/FULL_VOLUME_VELOCITY)
+	audio_impact.volume_db = clamp(lerp(-15, 0, last_vel.length()/FULL_VOLUME_VELOCITY), -15, 0)
 	audio_impact.play()
 	woosh_ready = true
 	on_ground = true
