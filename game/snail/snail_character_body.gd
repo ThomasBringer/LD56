@@ -17,28 +17,33 @@ const ANGULAR_SHELL_SPEED_SLOW: float = 5
 var target_angle: float = 0
 var input: float
 
-#func manage_plants(delta: float) -> void:
-	#var collision: KinematicCollision2D = get_last_slide_collision()
-	#if collision:
-		#var collider = collision.get_collider()
-		#if collider.is_in_group("plantpart"):
-			#collider.on_player_here(delta)
-	#
-	#for plant in get_tree().get_nodes_in_group("plantpart"):
-		#plant.on_player_everyone(delta)
+@onready var audio_impact: AudioStreamPlayer = $"../Audio/AudioImpact"
+@onready var audio_slither: AudioStreamPlayer = $"../Audio/AudioSlither"
+@onready var audio_woosh: AudioStreamPlayer = $"../Audio/AudioWoosh"
+@onready var audio_out_shell: AudioStreamPlayer = $"../Audio/AudioOutShell"
+
+var started_falling: bool = true
+
+var input_multiplier: int = 1
 
 func _physics_process(delta: float) -> void:
 	if not is_on_wall():
+		if not started_falling:
+			started_falling = true
+			audio_woosh.play()
 		velocity.x = 0
 		velocity.y += get_gravity().y * delta
 		move_and_slide()
 		if is_on_wall():
+			if not audio_out_shell.playing:
+				audio_impact.play()
 			update_forward()
 		return
-	
+		
+	started_falling = false
 	#manage_plants(delta)
 	
-	input = Input.get_axis("ui_left", "ui_right")
+	input = Input.get_axis("move_left", "move_right") * input_multiplier
 	if not input:
 		velocity = Vector2.ZERO
 		rotate_smooth(delta)
@@ -67,6 +72,13 @@ func _physics_process(delta: float) -> void:
 			#smooth_rotator.rotate(angle_vel * delta)
 			rotate_smooth(delta)
 			return
+
+func _input(event):
+	if event.is_action_pressed("move_left") or event.is_action_pressed("move_right"):
+		input_multiplier = 1 if abs(rotator_node.global_rotation) <= PI/2 else -1
+		audio_slither.play()
+	elif (event.is_action_released("move_left") and not Input.is_action_pressed("move_right")) or (event.is_action_released("move_right") and not Input.is_action_pressed("move_left")):
+		audio_slither.stop()
 
 func rotate_smooth(delta: float):
 	rotate_smooth_node(smooth_rotator, ANGULAR_SHELL_SPEED, delta)

@@ -1,12 +1,18 @@
-[gd_scene load_steps=10 format=3 uid="uid://b4muiwy510xda"]
+[gd_scene load_steps=20 format=3 uid="uid://b4muiwy510xda"]
 
 [ext_resource type="Script" path="res://snail/snail.gd" id="1_iyvp7"]
 [ext_resource type="Texture2D" uid="uid://b5v5wxpymaqnp" path="res://snail/snail.svg" id="1_wplun"]
+[ext_resource type="Script" path="res://snail/snail_rigid_body.gd" id="2_cnd88"]
 [ext_resource type="PackedScene" uid="uid://dm38ven40lraw" path="res://snail/snail_shell_shape.tscn" id="2_whbvd"]
 [ext_resource type="PackedScene" uid="uid://ddqgo2q43epuh" path="res://snail/tail_ray_cast.tscn" id="4_8anxc"]
 [ext_resource type="Script" path="res://snail/snail_character_body.gd" id="4_8j8u1"]
 [ext_resource type="Script" path="res://snail/tail.gd" id="4_hwl81"]
 [ext_resource type="Script" path="res://snail/plant_detector.gd" id="8_8fbi7"]
+[ext_resource type="AudioStream" uid="uid://jktrmuvhc30n" path="res://snail/audio/outshell.wav" id="8_v2ff7"]
+[ext_resource type="AudioStream" uid="uid://y5fkq5bu6ax4" path="res://snail/audio/impact.ogg" id="8_wak86"]
+[ext_resource type="AudioStream" uid="uid://msl55bk4hvcc" path="res://snail/audio/inshell.wav" id="10_553n4"]
+[ext_resource type="AudioStream" uid="uid://c8l2curc3d8rm" path="res://snail/audio/slither.wav" id="10_u2pol"]
+[ext_resource type="AudioStream" uid="uid://br2pgr1gmd8f8" path="res://snail/audio/woosh.wav" id="11_8gx5u"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_grl1f"]
 radius = 150.0
@@ -15,6 +21,26 @@ radius = 150.0
 _data = [Vector2(0, 0.25), 0.0, 2.57143, 0, 0, Vector2(1, 1), -0.0559003, 0.0, 0, 0]
 point_count = 2
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_xnqkv"]
+random_pitch = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("8_wak86")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_3imwe"]
+random_pitch = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("8_v2ff7")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_lf877"]
+random_pitch = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("10_553n4")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_62e4r"]
+random_pitch = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("11_8gx5u")
+
 [node name="Snail" type="Node2D"]
 script = ExtResource("1_iyvp7")
 
@@ -22,6 +48,7 @@ script = ExtResource("1_iyvp7")
 collision_mask = 20
 contact_monitor = true
 max_contacts_reported = 1
+script = ExtResource("2_cnd88")
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="RigidBody2D"]
 remote_path = NodePath("../../Follower")
@@ -121,5 +148,23 @@ begin_cap_mode = 2
 end_cap_mode = 2
 antialiased = true
 
+[node name="Audio" type="Node" parent="."]
+
+[node name="AudioImpact" type="AudioStreamPlayer" parent="Audio"]
+stream = SubResource("AudioStreamRandomizer_xnqkv")
+
+[node name="AudioOutShell" type="AudioStreamPlayer" parent="Audio"]
+stream = SubResource("AudioStreamRandomizer_3imwe")
+
+[node name="AudioInShell" type="AudioStreamPlayer" parent="Audio"]
+stream = SubResource("AudioStreamRandomizer_lf877")
+
+[node name="AudioSlither" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("10_u2pol")
+
+[node name="AudioWoosh" type="AudioStreamPlayer" parent="Audio"]
+stream = SubResource("AudioStreamRandomizer_62e4r")
+
+[connection signal="body_entered" from="RigidBody2D" to="RigidBody2D" method="_on_collision"]
 [connection signal="body_entered" from="Follower/PlantDetector" to="Follower/PlantDetector" method="_on_plant_entered"]
 [connection signal="body_exited" from="Follower/PlantDetector" to="Follower/PlantDetector" method="_on_plant_exited"]

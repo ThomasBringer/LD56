@@ -12,15 +12,12 @@ var near_player: bool = false
 var bending: int = 0
 func set_near_player(val: bool = true) -> void:
 	near_player = val
-	print("set near player ", name," b ", bending, " near player ",near_player)
 	if val:
 		bend()
 	else:
 		unbend()
 
-func _physics_process(delta: float) -> void:
-	#print("________________target_angle ",target_angle)
-	
+func _physics_process(delta: float) -> void:	
 	rotate_towards_target(delta)
 
 func try_bend_parent() -> void:
@@ -30,10 +27,8 @@ func try_bend_parent() -> void:
 
 func bend() -> void:
 	bending += 1
-	target_angle = player_angle # base_angle + (player_angle - base_angle) *.5 # / float(2 ** depth)
-	#print("target_angle3 ",target_angle)
+	target_angle = player_angle
 	try_bend_parent()
-	print("Bend ", name," b ", bending, " near player ",near_player)
 
 func try_unbend_parent() -> void:
 	var parent: Node2D = get_parent()
@@ -43,11 +38,8 @@ func try_unbend_parent() -> void:
 func unbend() -> void:
 	bending -= 1
 	if bending < 1:
-		#print("target_angle4 ",target_angle)
-		print("unbend, not near player ", name)
 		target_angle = base_angle
 	try_unbend_parent()
-	print("Unbend ", name," b ", bending, " near player ",near_player)
 
 func rotate_towards_target(delta: float) -> void:
 	rotate_smooth_node(self, SPEED, delta)

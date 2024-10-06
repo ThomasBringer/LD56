@@ -7,7 +7,6 @@ var points: Array[Node2D] = []
 func _ready() -> void:
 	line.clear_points()
 	search_part()
-	print("point_count", point_count)
 
 func search_part(my_parent: Node2D = self) -> void:
 	for child in my_parent.get_children():
