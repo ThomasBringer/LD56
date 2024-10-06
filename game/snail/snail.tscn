@@ -72,6 +72,9 @@ update_scale = false
 
 [node name="Follower" type="Node2D" parent="."]
 
+[node name="AudioListener2D" type="AudioListener2D" parent="Follower"]
+current = true
+
 [node name="Forward" type="Node2D" parent="Follower"]
 
 [node name="Camera2D" type="Camera2D" parent="Follower"]

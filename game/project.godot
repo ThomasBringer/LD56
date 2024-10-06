@@ -77,6 +77,7 @@ shell={
 2d_physics/layer_5="Plant"
 2d_physics/layer_6="Boundary"
 2d_physics/layer_7="Stopper"
+2d_physics/layer_8="Ladybug"
 
 [physics]
 

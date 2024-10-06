@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://2wqowd4uydil"]
+[gd_scene load_steps=27 format=3 uid="uid://2wqowd4uydil"]
 
 [ext_resource type="PackedScene" uid="uid://b4muiwy510xda" path="res://snail/snail.tscn" id="1_77obm"]
 [ext_resource type="AudioStream" uid="uid://cs03edgk0ym1g" path="res://audio/garden-ambience-236744.mp3" id="1_askrw"]
@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://c0ic3qxnloe0h" path="res://ground/plant props/leaf_2.tscn" id="12_d5l22"]
 [ext_resource type="PackedScene" uid="uid://djb6dgn4hxfg2" path="res://ground/plant props/leaf_4.tscn" id="12_gxki3"]
 [ext_resource type="Shader" path="res://misc/mix colors.gdshader" id="15_vjkhb"]
+[ext_resource type="PackedScene" uid="uid://bctgnriqm0ulb" path="res://ladybug/ladybug.tscn" id="18_u2e3k"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_aekaq"]
 shader = ExtResource("15_vjkhb")
@@ -527,7 +528,7 @@ polygon = PackedVector2Array(135, 166, 75, 766, -524, -37, -997, -343, -1854, -4
 position = Vector2(4351, -1936)
 
 [node name="CollisionPolygon2D" parent="Branch2" index="0"]
-polygon = PackedVector2Array(-7776, -358, -7429, -1982, -7302, -2737, -6513, -3296, -5971, -3330, -6106, -931, -5978, -903, -5985, -397, -5913, -231, -5246, 17, -4628, -50, -4317, -224, -4160, -205, -4317, -174, -4564, 9, -5125, 118, -4985, 370, -4226, 357, -4131, 399, -4242, 435, -4480, 435, -5000, 496, -5291, 663, -5303, 825, -5402, 650, -5174, 408, -5323, 133, -5709, 2, -5945, -22, -6203, 108, -6122, 1790, -7448, 2296)
+polygon = PackedVector2Array(-7776, -358, -7429, -1982, -7302, -2737, -6513, -3296, -5971, -3330, -6106, -931, -5978, -903, -5985, -397, -5913, -231, -5246, 17, -4628, -50, -4317, -224, -4160, -205, -4317, -174, -4564, 9, -5125, 118, -4985, 370, -4226, 357, -4131, 399, -4242, 435, -4480, 435, -5000, 496, -5291, 663, -5303, 825, -5402, 650, -5174, 408, -5323, 133, -5709, 2, -5903, -48, -6021, 176, -5914, 1719, -7448, 2296)
 
 [node name="Stopper2" parent="." instance=ExtResource("8_geiuo")]
 position = Vector2(-1334, -200)
@@ -633,6 +634,33 @@ color = Color(0.243137, 0.152941, 0.192157, 1)
 [node name="Polygon2D2" type="Polygon2D" parent="Sign2"]
 color = Color(0.45098, 0.243137, 0.223529, 1)
 polygon = PackedVector2Array(-500, -165, -402, -259, -311, -153, -338, 130, -421, 47, -511, 118)
+
+[node name="Ladybug" parent="." instance=ExtResource("18_u2e3k")]
+position = Vector2(1033, -329)
+
+[node name="Ladybug2" parent="." instance=ExtResource("18_u2e3k")]
+position = Vector2(149, -1285)
+
+[node name="Ladybug3" parent="." instance=ExtResource("18_u2e3k")]
+position = Vector2(3533, -130)
+
+[node name="Ladybug4" parent="." instance=ExtResource("18_u2e3k")]
+position = Vector2(3091, -2044)
+
+[node name="Ladybug5" parent="." instance=ExtResource("18_u2e3k")]
+position = Vector2(1006, -2172)
+
+[node name="Ladybug6" parent="." instance=ExtResource("18_u2e3k")]
+position = Vector2(-670, -2166)
+
+[node name="Ladybug7" parent="." instance=ExtResource("18_u2e3k")]
+position = Vector2(-984, -3520)
+
+[node name="Ladybug8" parent="." instance=ExtResource("18_u2e3k")]
+position = Vector2(-1448, -1672)
+
+[node name="Ladybug9" parent="." instance=ExtResource("18_u2e3k")]
+position = Vector2(224, -3192)
 
 [editable path="GroundPoly"]
 [editable path="Branch"]

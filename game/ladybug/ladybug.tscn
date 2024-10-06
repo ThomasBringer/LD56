@@ -1,0 +1,240 @@
+[gd_scene load_steps=15 format=3 uid="uid://bctgnriqm0ulb"]
+
+[ext_resource type="Texture2D" uid="uid://bur6vgqb3q6l1" path="res://ladybug/ladybug.svg" id="1_jgqg0"]
+[ext_resource type="Script" path="res://ladybug/ladybug.gd" id="1_qifhl"]
+[ext_resource type="AudioStream" uid="uid://kefug80lmd3" path="res://ladybug/bz.wav" id="3_7jjwr"]
+[ext_resource type="AudioStream" uid="uid://b5pfvc5lk6fsd" path="res://ladybug/mixkit-game-flute-bonus-2313.wav" id="4_jlgm1"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bqbjl"]
+radius = 200.0
+
+[sub_resource type="Animation" id="Animation_ac4wc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_j2upw"]
+resource_name = "idle"
+length = 2.0
+loop_mode = 1
+step = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 25), Vector2(0, -25), Vector2(0, 25)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_aet6a"]
+_data = {
+"RESET": SubResource("Animation_ac4wc"),
+"idle": SubResource("Animation_j2upw")
+}
+
+[sub_resource type="Animation" id="Animation_dobvj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D/Wings/WingPivotLeft:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D/Wings/WingPivotLeft2:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_q347w"]
+resource_name = "fly"
+length = 0.3
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D/Wings/WingPivotLeft:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 0.785398, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D/Wings/WingPivotLeft2:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, -0.785398, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dqw5f"]
+_data = {
+"RESET": SubResource("Animation_dobvj"),
+"fly": SubResource("Animation_q347w")
+}
+
+[sub_resource type="Animation" id="Animation_swi65"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.5, 0.5)]
+}
+
+[sub_resource type="Animation" id="Animation_22ix2"]
+resource_name = "collect"
+length = 0.75
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.5, 0.5), Vector2(1, 1), Vector2(1e-05, 1e-05)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CollectAudio")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vsfx1"]
+_data = {
+"RESET": SubResource("Animation_swi65"),
+"collect": SubResource("Animation_22ix2")
+}
+
+[node name="Ladybug" type="Area2D"]
+collision_layer = 128
+collision_mask = 3
+script = ExtResource("1_qifhl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_bqbjl")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 50
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_jgqg0")
+hframes = 2
+
+[node name="Wings" type="Node2D" parent="Sprite2D"]
+
+[node name="WingPivotLeft" type="Node2D" parent="Sprite2D/Wings"]
+position = Vector2(-58, -90)
+
+[node name="Sprite2D2" type="Sprite2D" parent="Sprite2D/Wings/WingPivotLeft"]
+position = Vector2(58, 90)
+texture = ExtResource("1_jgqg0")
+hframes = 2
+frame = 1
+
+[node name="WingPivotLeft2" type="Node2D" parent="Sprite2D/Wings"]
+position = Vector2(58, -90)
+
+[node name="Sprite2D2" type="Sprite2D" parent="Sprite2D/Wings/WingPivotLeft2"]
+position = Vector2(-58, 90)
+texture = ExtResource("1_jgqg0")
+flip_h = true
+hframes = 2
+frame = 1
+
+[node name="Idle" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_aet6a")
+}
+autoplay = "idle"
+
+[node name="Fly" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_dqw5f")
+}
+autoplay = "fly"
+
+[node name="Collect" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_vsfx1")
+}
+
+[node name="BzAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_7jjwr")
+volume_db = -5.0
+autoplay = true
+max_distance = 1500.0
+
+[node name="CollectAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_jlgm1")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
