@@ -28,6 +28,7 @@ window/stretch/mode="canvas_items"
 
 plantpart=""
 plantpoint=""
+stopper=""
 
 [input]
 
@@ -75,6 +76,7 @@ shell={
 2d_physics/layer_4="PlantDetector"
 2d_physics/layer_5="Plant"
 2d_physics/layer_6="Boundary"
+2d_physics/layer_7="Stopper"
 
 [physics]
 

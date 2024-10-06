@@ -2,8 +2,10 @@ extends StaticBody2D
 
 class_name PlantPart
 
+@export var bend_amount: float = 8
+
 @onready var base_angle: float = rotation
-@onready var player_angle: float = 2 * rotation
+@onready var player_angle: float = rotation + sign(rotation) * deg_to_rad(bend_amount)
 @onready var target_angle: float = base_angle
 
 const SPEED: float = 5

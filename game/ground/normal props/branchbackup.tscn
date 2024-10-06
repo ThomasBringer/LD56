@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://dsgdjsx8fvjy3"]
+
+[ext_resource type="PackedScene" uid="uid://th76117nmfti" path="res://ground/ground_base.tscn" id="1_4jhdx"]
+
+[sub_resource type="Curve" id="Curve_ism3u"]
+_data = [Vector2(0, 1), 0.0, -0.8, 0, 1, Vector2(1, 0.2), -0.8, 0.0, 1, 0]
+point_count = 2
+
+[node name="Branch" instance=ExtResource("1_4jhdx")]
+
+[node name="Line2D" type="Line2D" parent="." index="0"]
+points = PackedVector2Array(0, 0, -40, -163, -265, -194)
+width = 320.0
+width_curve = SubResource("Curve_ism3u")
+default_color = Color(0.243137, 0.152941, 0.192157, 1)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." index="1"]
+polygon = PackedVector2Array(-191, -95, -173, 89, -109, -27)

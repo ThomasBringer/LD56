@@ -1,0 +1,84 @@
+[gd_scene load_steps=13 format=3 uid="uid://2wqowd4uydil"]
+
+[ext_resource type="PackedScene" uid="uid://b4muiwy510xda" path="res://snail/snail.tscn" id="1_77obm"]
+[ext_resource type="PackedScene" uid="uid://bm1ypnqh4imiw" path="res://ground/ground_poly.tscn" id="3_kianb"]
+[ext_resource type="PackedScene" uid="uid://cqedsbp3sxn4t" path="res://plant/plants/grass.tscn" id="4_a41y7"]
+[ext_resource type="Texture2D" uid="uid://cfm3qi0rk3jj3" path="res://world/world.svg" id="5_0ce1i"]
+[ext_resource type="PackedScene" uid="uid://cn5f55ghqr4w8" path="res://plant/plants/grass variants/grass_2.tscn" id="5_cbf84"]
+[ext_resource type="PackedScene" uid="uid://boel460a0aig6" path="res://plant/plants/grass variants/grass_3.tscn" id="6_y4a1b"]
+[ext_resource type="PackedScene" uid="uid://xo3mvivdkf73" path="res://plant/plants/grass variants/grass_4.tscn" id="7_1rm36"]
+[ext_resource type="PackedScene" uid="uid://c2m5f5n5nuty3" path="res://ground/stopper.tscn" id="8_geiuo"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_igi05"]
+atlas = ExtResource("5_0ce1i")
+region = Rect2(71.6501, 90.59, 188.76, 268.62)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ljyjs"]
+normal = Vector2(1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_na7ue"]
+normal = Vector2(-1, 0)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u6l8g"]
+size = Vector2(250, 500)
+
+[node name="Main" type="Node2D"]
+
+[node name="Snail" parent="." node_paths=PackedStringArray("boundary_left", "boundary_right", "boundary_down") instance=ExtResource("1_77obm")]
+unique_name_in_owner = true
+z_index = 10
+boundary_left = NodePath("../Boundaries/BoundaryLeft")
+boundary_right = NodePath("../Boundaries/BoundaryRight")
+boundary_down = NodePath("../Boundaries/BoundaryDownCam")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_igi05")
+
+[node name="GroundPoly" parent="." instance=ExtResource("3_kianb")]
+
+[node name="CollisionPolygon2D" parent="GroundPoly" index="0"]
+position = Vector2(1, 0)
+polygon = PackedVector2Array(4694, 196, 3173, 84, 3003, 149, 2955, 267, 2813, 411, 2597, 427, 2399, 424, 2250, 262, 2186, 59, 2131, -39, 1894, -115, 1762, -39, 1596, -44, 1216, -125, 1016, -101, 890, -24, 743, 26, 645, 118, 495, 174, 307, 150, 251.458, 125, -257.659, 125, -487, 183, -789, 174, -1000, 125, -1242, -44, -1545, -195, -1752, -227, -2109, -156, -2104, 943, 5, 962, 3099, 1075)
+
+[node name="Boundaries" type="Node2D" parent="."]
+
+[node name="BoundaryLeft" type="StaticBody2D" parent="Boundaries"]
+position = Vector2(-1750, 0)
+collision_layer = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/BoundaryLeft"]
+shape = SubResource("WorldBoundaryShape2D_ljyjs")
+
+[node name="BoundaryRight" type="StaticBody2D" parent="Boundaries"]
+position = Vector2(9321, 0)
+collision_layer = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/BoundaryRight"]
+shape = SubResource("WorldBoundaryShape2D_na7ue")
+
+[node name="BoundaryDownCam" type="Node2D" parent="Boundaries"]
+position = Vector2(0, 375)
+
+[node name="World" type="Node" parent="."]
+
+[node name="Grass" type="Node" parent="World"]
+
+[node name="Grass" parent="World/Grass" instance=ExtResource("4_a41y7")]
+position = Vector2(1354, -111)
+
+[node name="Grass2" parent="World/Grass" instance=ExtResource("5_cbf84")]
+position = Vector2(2083, -62)
+
+[node name="Grass3" parent="World/Grass" instance=ExtResource("6_y4a1b")]
+position = Vector2(2087, -18)
+
+[node name="Grass4" parent="World/Grass" instance=ExtResource("7_1rm36")]
+position = Vector2(3221, 56)
+
+[node name="Stopper" parent="." instance=ExtResource("8_geiuo")]
+position = Vector2(-750, -37)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Stopper"]
+shape = SubResource("RectangleShape2D_u6l8g")
+
+[editable path="GroundPoly"]

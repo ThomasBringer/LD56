@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://bu75j120r4ddg"]
+
+[ext_resource type="PackedScene" uid="uid://th76117nmfti" path="res://ground/ground_base.tscn" id="1_ev2cf"]
+
+[node name="NormalProp" instance=ExtResource("1_ev2cf")]
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="0"]

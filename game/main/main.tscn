@@ -1,22 +1,27 @@
-[gd_scene load_steps=11 format=3 uid="uid://2wqowd4uydil"]
+[gd_scene load_steps=16 format=3 uid="uid://2wqowd4uydil"]
 
 [ext_resource type="PackedScene" uid="uid://b4muiwy510xda" path="res://snail/snail.tscn" id="1_77obm"]
+[ext_resource type="Script" path="res://main/plant.gd" id="3_gxp2c"]
 [ext_resource type="PackedScene" uid="uid://bm1ypnqh4imiw" path="res://ground/ground_poly.tscn" id="3_kianb"]
 [ext_resource type="PackedScene" uid="uid://cqedsbp3sxn4t" path="res://plant/plants/grass.tscn" id="4_a41y7"]
-[ext_resource type="Texture2D" uid="uid://cfm3qi0rk3jj3" path="res://world/world.svg" id="5_0ce1i"]
+[ext_resource type="PackedScene" uid="uid://ratt0b7hrhxs" path="res://plant/plant_part.tscn" id="4_orsdx"]
 [ext_resource type="PackedScene" uid="uid://cn5f55ghqr4w8" path="res://plant/plants/grass variants/grass_2.tscn" id="5_cbf84"]
 [ext_resource type="PackedScene" uid="uid://boel460a0aig6" path="res://plant/plants/grass variants/grass_3.tscn" id="6_y4a1b"]
 [ext_resource type="PackedScene" uid="uid://xo3mvivdkf73" path="res://plant/plants/grass variants/grass_4.tscn" id="7_1rm36"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_igi05"]
-atlas = ExtResource("5_0ce1i")
-region = Rect2(71.6501, 90.59, 188.76, 268.62)
+[ext_resource type="PackedScene" uid="uid://c2m5f5n5nuty3" path="res://ground/stopper.tscn" id="8_geiuo"]
+[ext_resource type="PackedScene" uid="uid://7vpdscomc3jn" path="res://ground/normal props/stump.tscn" id="9_1y5qf"]
+[ext_resource type="PackedScene" uid="uid://d0pmsqckmoevo" path="res://ground/normal props/branch.tscn" id="9_6yofo"]
+[ext_resource type="PackedScene" uid="uid://djb6dgn4hxfg2" path="res://ground/plant props/leaf_4.tscn" id="12_gxki3"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ljyjs"]
 normal = Vector2(1, 0)
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_na7ue"]
 normal = Vector2(-1, 0)
+
+[sub_resource type="Curve" id="Curve_lr7ag"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.5), -1.75, 0.0, 0, 0]
+point_count = 2
 
 [node name="Main" type="Node2D"]
 
@@ -27,14 +32,11 @@ boundary_left = NodePath("../Boundaries/BoundaryLeft")
 boundary_right = NodePath("../Boundaries/BoundaryRight")
 boundary_down = NodePath("../Boundaries/BoundaryDownCam")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = SubResource("AtlasTexture_igi05")
-
 [node name="GroundPoly" parent="." instance=ExtResource("3_kianb")]
 
 [node name="CollisionPolygon2D" parent="GroundPoly" index="0"]
 position = Vector2(1, 0)
-polygon = PackedVector2Array(4694, 196, 3173, 84, 3003, 149, 2955, 267, 2813, 411, 2597, 427, 2399, 424, 2250, 262, 2186, 59, 2131, -39, 1894, -115, 1762, -39, 1596, -44, 1216, -125, 1016, -101, 890, -24, 743, 26, 645, 118, 495, 174, 307, 150, 251.458, 125, -257.659, 125, -487, 183, -789, 174, -1000, 125, -1242, -44, -1545, -195, -1752, -227, -2109, -156, -2104, 943, 5, 962, 3099, 1075)
+polygon = PackedVector2Array(4694, 196, 4318, -80, 4142, 92, 3950, 162, 3173, 84, 3003, 149, 2955, 267, 2816, 467, 2597, 493, 2362, 450, 2217, 282, 2186, 59, 2131, -39, 1894, -115, 1762, -39, 1596, -44, 1216, -125, 1016, -101, 890, -24, 743, 26, 645, 118, 495, 174, 307, 150, 251.458, 125, -257.659, 125, -487, 183, -789, 174, -1000, 125, -1242, -44, -1545, -195, -1752, -227, -2109, -156, -2104, 943, 5, 962, 3099, 1075, 7233, 1013, 7301, 85)
 
 [node name="Boundaries" type="Node2D" parent="."]
 
@@ -69,6 +71,112 @@ position = Vector2(2083, -62)
 position = Vector2(2087, -18)
 
 [node name="Grass4" parent="World/Grass" instance=ExtResource("7_1rm36")]
-position = Vector2(3221, 56)
+position = Vector2(3152, 101)
+
+[node name="Stump" parent="." instance=ExtResource("9_1y5qf")]
+position = Vector2(5510, -485)
+
+[node name="Plant" type="Node2D" parent="."]
+position = Vector2(-1983, -626)
+script = ExtResource("3_gxp2c")
+
+[node name="Line2D" type="Line2D" parent="Plant"]
+points = PackedVector2Array(0, 0, -315, -286, -410, -605, -543, -981)
+width = 160.0
+width_curve = SubResource("Curve_lr7ag")
+default_color = Color(0.388235, 0.780392, 0.301961, 1)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="PlantPart" parent="Plant" instance=ExtResource("4_orsdx")]
+position = Vector2(468, 498)
+rotation = 0.174533
+bend_amount = 2.0
+
+[node name="PlantPart" parent="Plant/PlantPart" instance=ExtResource("4_orsdx")]
+position = Vector2(0, -250)
+rotation = 0.174533
+bend_amount = 2.0
+
+[node name="PlantPart" parent="Plant/PlantPart/PlantPart" instance=ExtResource("4_orsdx")]
+position = Vector2(0, -250)
+rotation = 0.174533
+bend_amount = 2.0
+
+[node name="PlantPart" parent="Plant/PlantPart/PlantPart/PlantPart" instance=ExtResource("4_orsdx")]
+position = Vector2(0, -250)
+rotation = 0.174533
+bend_amount = 2.0
+
+[node name="PlantPart" parent="Plant/PlantPart/PlantPart/PlantPart/PlantPart" instance=ExtResource("4_orsdx")]
+position = Vector2(0, -250)
+rotation = 0.174533
+bend_amount = 2.0
+
+[node name="PlantPart2" parent="Plant/PlantPart/PlantPart/PlantPart/PlantPart/PlantPart" instance=ExtResource("4_orsdx")]
+position = Vector2(0, -250)
+rotation = 0.785398
+bend_amount = 2.0
+
+[node name="PlantPart2" parent="Plant/PlantPart/PlantPart/PlantPart/PlantPart/PlantPart/PlantPart2" instance=ExtResource("4_orsdx")]
+position = Vector2(0, -250)
+rotation = 0.174533
+
+[node name="Leaf4" parent="Plant/PlantPart/PlantPart/PlantPart/PlantPart/PlantPart/PlantPart2/PlantPart2" instance=ExtResource("12_gxki3")]
+position = Vector2(0, -250)
+rotation = 0.1309
+
+[node name="Stopper2" parent="Plant/PlantPart/PlantPart/PlantPart/PlantPart" instance=ExtResource("8_geiuo")]
+position = Vector2(175, 0)
+rotation = 1.5708
+
+[node name="Line2D5" parent="Plant/PlantPart/PlantPart/PlantPart/PlantPart/Stopper2" index="5"]
+points = PackedVector2Array(0, 0, -218.151, 92.9443)
+
+[node name="Line2D6" parent="Plant/PlantPart/PlantPart/PlantPart/PlantPart/Stopper2" index="6"]
+points = PackedVector2Array(0, 0, -83.4156, -84.0768)
+
+[node name="Line2D7" parent="Plant/PlantPart/PlantPart/PlantPart/PlantPart/Stopper2" index="7"]
+points = PackedVector2Array(0, 0, -0.682861, -153.498)
+
+[node name="Line2D8" parent="Plant/PlantPart/PlantPart/PlantPart/PlantPart/Stopper2" index="8"]
+points = PackedVector2Array(0, 0, 62.5741, -113.893)
+
+[node name="Line2D9" parent="Plant/PlantPart/PlantPart/PlantPart/PlantPart/Stopper2" index="9"]
+points = PackedVector2Array(2.88495, -7.67517, 223.368, 68.3992)
+
+[node name="Branch" parent="." instance=ExtResource("9_6yofo")]
+position = Vector2(4414, -1451)
+
+[node name="CollisionPolygon2D" parent="Branch" index="0"]
+polygon = PackedVector2Array(117, -363, 98, 208, -460, -176, -1307, -566, -2078, -423, -2287, -81, -2829, 109, -3161, 79, -3463, 98, -3757, -132, -3440, 0, -3278, -4, -3029, -45, -3182, -400, -3358, -602, -3888, -940, -4377, -952, -4547, -884, -4733, -738, -5014, -688, -5346, -784, -4993, -738, -4747, -823, -4560, -956, -4381, -1037, -3806, -1008, -3275, -668, -3111, -432, -2936, -71, -2668, -136, -2196, -636, -1234, -778)
+
+[node name="Stopper" parent="." instance=ExtResource("8_geiuo")]
+position = Vector2(-222, -2074)
+
+[node name="Line2D2" parent="Stopper" index="2"]
+points = PackedVector2Array(0, 0, 80, 105)
+
+[node name="Line2D3" parent="Stopper" index="3"]
+points = PackedVector2Array(0, 0, 5, 129)
+
+[node name="Line2D4" parent="Stopper" index="4"]
+points = PackedVector2Array(0, 0, -82, 102)
+
+[node name="Line2D5" parent="Stopper" index="5"]
+points = PackedVector2Array(0, 0, -258, -85)
+
+[node name="Line2D6" parent="Stopper" index="6"]
+points = PackedVector2Array(0, 0, -109, -143)
+
+[node name="Line2D8" parent="Stopper" index="8"]
+points = PackedVector2Array(0, 0, 183, -321)
+
+[node name="Line2D9" parent="Stopper" index="9"]
+points = PackedVector2Array(0, 0, 413, -338)
 
 [editable path="GroundPoly"]
+[editable path="Plant/PlantPart/PlantPart/PlantPart/PlantPart/Stopper2"]
+[editable path="Branch"]
+[editable path="Stopper"]

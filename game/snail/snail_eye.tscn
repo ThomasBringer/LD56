@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://3xoolhxqsb7g"]
+
+[ext_resource type="Texture2D" uid="uid://bs5j4uccperwa" path="res://world/circle500.svg" id="1_r7tgb"]
+
+[node name="SnailEye" type="Node2D"]
+
+[node name="Eye" type="Sprite2D" parent="."]
+self_modulate = Color(0.996078, 0.905882, 0.380392, 1)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("1_r7tgb")
+
+[node name="Sprite2D" type="Sprite2D" parent="Eye"]
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("1_r7tgb")
+
+[node name="Pupil" type="Sprite2D" parent="."]
+self_modulate = Color(0.0705882, 0.305882, 0.537255, 1)
+scale = Vector2(0.04, 0.04)
+texture = ExtResource("1_r7tgb")

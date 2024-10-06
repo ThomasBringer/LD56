@@ -1,0 +1,78 @@
+[gd_scene load_steps=2 format=3 uid="uid://c2m5f5n5nuty3"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wk40y"]
+radius = 100.0
+height = 350.0
+
+[node name="Stopper" type="StaticBody2D" groups=["stopper"]]
+modulate = Color(0.752941, 0.796078, 0.862745, 1)
+z_index = -1
+collision_layer = 64
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_wk40y")
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PackedVector2Array(-94, -2, -77, 102, 0, 128, 77, 108, 104, 4, 70, -113, -1, -158, -80, -92)
+closed = true
+width = 25.0
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="Line2D2" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, 114, 164)
+width = 25.0
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="Line2D3" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, 1, 233)
+width = 25.0
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="Line2D4" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, -121, 157)
+width = 25.0
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="Line2D5" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, -119, 2)
+width = 25.0
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="Line2D6" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, -106, -166)
+width = 25.0
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="Line2D7" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, -2, -233)
+width = 25.0
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="Line2D8" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, 107, -174)
+width = 25.0
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="Line2D9" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, 117, 2)
+width = 25.0
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2

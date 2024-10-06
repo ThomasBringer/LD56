@@ -18,6 +18,12 @@ extends Node2D
 @onready var eye_trail_left: Line2D = $"../../../Head/EyeTrailLeft"
 @onready var eye_trail_right: Line2D = $"../../../Head/EyeTrailRight"
 
+@onready var eye_left: Sprite2D = $"../../../Head/SnailEyeLeft/Eye"
+@onready var pupil_left: Sprite2D = $"../../../Head/SnailEyeLeft/Pupil"
+
+@onready var eye_right: Sprite2D = $"../../../Head/SnailEyeRight/Eye"
+@onready var pupil_right: Sprite2D = $"../../../Head/SnailEyeRight/Pupil"
+
 @onready var head_offset: Vector2 = head_trail.get_point_position(1) - head_trail.get_point_position(0)
 func get_head_offset_relative() -> Vector2:
 	if last_input < 0:
@@ -39,6 +45,9 @@ const SPEED: float = 20
 var point_moved_count: int = 0
 var last_delta: float
 var last_input: float = 1
+
+const NORMAL_PUPIL_DISTANCE = 35
+const MAX_PUPIL_DISTANCE = 25
 
 var is_shelled: bool:
 	get:
@@ -73,8 +82,16 @@ func shelled_process():
 		last_delta)
 	eye_trail_left.set_point_position(0, eye_base)
 	eye_trail_right.set_point_position(0, eye_base)
-	move_line_point_towards(eye_trail_left, 1, eye_base + (eye_left_offset* Vector2(1, -1)).rotated(rotator.global_rotation), last_delta)
-	move_line_point_towards(eye_trail_right, 1, eye_base + (eye_right_offset* Vector2(1, -1)).rotated(rotator.global_rotation), last_delta)
+	var eye_left_base: Vector2 = move_line_point_towards(eye_trail_left, 1,
+		eye_base + (eye_left_offset* Vector2(1, -1)).rotated(rotator.global_rotation),
+		last_delta)
+	var eye_right_base: Vector2 = move_line_point_towards(eye_trail_right, 1,
+		eye_base + (eye_right_offset* Vector2(1, -1)).rotated(rotator.global_rotation),
+		last_delta)
+	eye_left.position = eye_left_base
+	eye_right.position = eye_right_base
+	move_eye_towards(pupil_left, eye_left_base, last_delta)
+	move_eye_towards(pupil_right, eye_right_base, last_delta)
 
 func not_shelled_air_process():
 	for p in range(4):
@@ -152,11 +169,31 @@ func move_head(head_base: Vector2):
 		last_delta)
 	eye_trail_left.set_point_position(0, eye_base)
 	eye_trail_right.set_point_position(0, eye_base)
-	move_line_point_towards(eye_trail_left, 1, eye_base + eye_left_offset.rotated(rotator.global_rotation), last_delta)
-	move_line_point_towards(eye_trail_right, 1, eye_base + eye_right_offset.rotated(rotator.global_rotation), last_delta)
+	var eye_left_base: Vector2 = move_line_point_towards(eye_trail_left, 1, eye_base + eye_left_offset.rotated(rotator.global_rotation), last_delta)
+	var eye_right_base: Vector2 = move_line_point_towards(eye_trail_right, 1, eye_base + eye_right_offset.rotated(rotator.global_rotation), last_delta)
+	eye_left.position = eye_left_base
+	eye_right.position = eye_right_base
+	
+	pupil_left.position = eye_left_base
+	pupil_right.position = eye_right_base
+	
+	var offset: Vector2 = character_body.last_nonzero_input * NORMAL_PUPIL_DISTANCE * character_body.forward
+	move_eye_towards(pupil_left, eye_left_base + offset, last_delta)
+	move_eye_towards(pupil_right, eye_right_base + offset, last_delta)
 
 func move_point(p1: int, p2: int):
 	return move_line_point_towards(line_trail, p1, points[p2].global_position, last_delta)
+
+func move_eye_towards(node: Node2D, pos: Vector2, delta: float):
+	var start: Vector2 = node.position
+	var vel: Vector2 = (pos - snail.global_position - start) * SPEED
+	#if vel.length() > SPEED_MAX:
+		#vel = SPEED_MAX * vel.normalized()
+	var result: Vector2 = start + vel * delta
+	if result.distance_to(pos) > MAX_PUPIL_DISTANCE:
+		result = pos + MAX_PUPIL_DISTANCE*(result - pos).normalized()
+	node.position = result
+	return result
 
 func move_line_point_towards(line: Line2D, i: int, pos: Vector2, delta: float):
 	var start: Vector2 = line.get_point_position(i)
