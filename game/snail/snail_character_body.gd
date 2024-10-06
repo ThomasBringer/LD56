@@ -25,19 +25,40 @@ var input: float
 var started_falling: bool = true
 
 var input_multiplier: int = 1
+var slithering: bool = false
+var on_boundary: bool = false
+
+@onready var snail: Node2D = $".."
+var boundary_left: Node2D:
+	get:
+		return snail.boundary_left
+var boundary_right: Node2D:
+	get:
+		return snail.boundary_right
+@onready var b_left: float = boundary_left.global_position.x + 125
+@onready var b_right: float = boundary_right.global_position.x - 125
+
+var first_sound_impact: bool = true
 
 func _physics_process(delta: float) -> void:
 	if not is_on_wall():
 		if not started_falling:
 			started_falling = true
-			audio_woosh.play()
+			#if not first_sound_impact: 
+				#audio_woosh.play()
 		velocity.x = 0
 		velocity.y += get_gravity().y * delta
 		move_and_slide()
 		if is_on_wall():
 			if not audio_out_shell.playing:
-				audio_impact.play()
+				if first_sound_impact:
+					first_sound_impact = false
+				else:
+					audio_impact.play()
+			if slithering and not audio_slither.playing:
+				audio_slither.play()
 			update_forward()
+		clamp_pos()
 		return
 		
 	started_falling = false
@@ -71,13 +92,24 @@ func _physics_process(delta: float) -> void:
 			#angle_vel = (angle - smooth_rotator.rotation) / ANGULAR_SHELL_DURATION
 			#smooth_rotator.rotate(angle_vel * delta)
 			rotate_smooth(delta)
+			clamp_pos()
 			return
+			
+	clamp_pos()
+
+func clamp_pos():
+	on_boundary = position.x < b_left or position.x > b_right
+	if on_boundary:
+		audio_slither.stop()
+		position.x = clamp(position.x, b_left, b_right)
 
 func _input(event):
 	if event.is_action_pressed("move_left") or event.is_action_pressed("move_right"):
-		#input_multiplier = 1 if abs(rotator_node.global_rotation) <= PI/2 else -1
-		audio_slither.play()
+		slithering = true
+		if is_on_wall():
+			audio_slither.play()
 	elif (event.is_action_released("move_left") and not Input.is_action_pressed("move_right")) or (event.is_action_released("move_right") and not Input.is_action_pressed("move_left")):
+		slithering = false
 		audio_slither.stop()
 
 func rotate_smooth(delta: float):

@@ -1,0 +1,52 @@
+[gd_scene load_steps=6 format=3 uid="uid://cqedsbp3sxn4t"]
+
+[ext_resource type="Script" path="res://main/plant.gd" id="1_8mu2l"]
+[ext_resource type="PackedScene" uid="uid://ratt0b7hrhxs" path="res://plant/plant_part.tscn" id="2_4ys8u"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fmmq8"]
+radius = 70.0
+height = 410.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mb6li"]
+radius = 55.0
+height = 350.0
+
+[sub_resource type="Curve" id="Curve_lr7ag"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.5), -1.75, 0.0, 0, 0]
+point_count = 2
+
+[node name="Grass" type="Node2D"]
+position = Vector2(-1000, 0)
+script = ExtResource("1_8mu2l")
+
+[node name="PlantPart" parent="." instance=ExtResource("2_4ys8u")]
+rotation = 0.174533
+
+[node name="PlantPart2" parent="PlantPart" instance=ExtResource("2_4ys8u")]
+position = Vector2(0, -250)
+rotation = 0.174533
+
+[node name="CollisionShape2D" parent="PlantPart/PlantPart2" index="0"]
+shape = SubResource("CapsuleShape2D_fmmq8")
+
+[node name="PlantPart3" parent="PlantPart/PlantPart2" instance=ExtResource("2_4ys8u")]
+position = Vector2(0, -250)
+rotation = 0.174533
+
+[node name="CollisionShape2D" parent="PlantPart/PlantPart2/PlantPart3" index="0"]
+shape = SubResource("CapsuleShape2D_mb6li")
+
+[node name="PlantEnd" type="Node2D" parent="PlantPart/PlantPart2/PlantPart3" groups=["plantpoint"]]
+position = Vector2(0, -250)
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, 45, -246, 130, -482, 257, -701)
+width = 160.0
+width_curve = SubResource("Curve_lr7ag")
+default_color = Color(0.388235, 0.780392, 0.301961, 1)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[editable path="PlantPart/PlantPart2"]
+[editable path="PlantPart/PlantPart2/PlantPart3"]

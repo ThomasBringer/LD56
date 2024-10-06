@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://xlpjauw5trub"]
+
+[ext_resource type="PackedScene" uid="uid://ctjvk3p8i150a" path="res://ground/plant_prop.tscn" id="1_agrei"]
+[ext_resource type="Texture2D" uid="uid://bs5j4uccperwa" path="res://world/circle500.svg" id="2_jwxqi"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_iexcf"]
+radius = 250.0
+
+[node name="Petal" instance=ExtResource("1_agrei")]
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_jwxqi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
+shape = SubResource("CircleShape2D_iexcf")

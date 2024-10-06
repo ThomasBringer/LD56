@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://dsyor7lgqpyrp"]
+
+[ext_resource type="PackedScene" uid="uid://ctjvk3p8i150a" path="res://ground/plant_prop.tscn" id="1_k1v2i"]
+[ext_resource type="Texture2D" uid="uid://cfm3qi0rk3jj3" path="res://world/world.svg" id="2_ne73r"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_unanp"]
+atlas = ExtResource("2_ne73r")
+region = Rect2(79.2206, 726.545, 314.771, 757.684)
+
+[node name="Petal" instance=ExtResource("1_k1v2i")]
+
+[node name="Sprite2D" parent="." index="0"]
+position = Vector2(11, -352)
+texture = SubResource("AtlasTexture_unanp")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." index="1"]
+position = Vector2(11, -352)
+polygon = PackedVector2Array(2, -362.9, -18.1, -358.5, -39.9, -346.5, -63.3, -324.5, -80.6, -299.5, -97, -264.5, -109.3, -224.5, -123.1, -134.5, -119, -21.2, -98, 99.9, -60, 231.1, -13, 350.5, 44.2, 223.5, 83.2, 100.5, 112.4, -33.5, 122.2, -116.5, 117, -213.7, 97, -289, 77, -324.4, 56, -346.9, 29, -360.4)

@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://djb6dgn4hxfg2"]
+
+[ext_resource type="PackedScene" uid="uid://ctjvk3p8i150a" path="res://ground/plant_prop.tscn" id="1_1mewh"]
+[ext_resource type="Texture2D" uid="uid://cfm3qi0rk3jj3" path="res://world/world.svg" id="2_njphs"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_unanp"]
+atlas = ExtResource("2_njphs")
+region = Rect2(1163, 45.3523, 767.671, 1024.57)
+
+[node name="Leaf4" instance=ExtResource("1_1mewh")]
+
+[node name="Sprite2D" parent="." index="0"]
+position = Vector2(11, -377)
+texture = SubResource("AtlasTexture_unanp")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." index="1"]
+position = Vector2(11, -377)
+polygon = PackedVector2Array(-26, -492, -203.2, -181, -264.4, -55, -301.6, 38, -339.8, 168, -362.6, 291, -361.5, 352.5, -347.5, 400.9, -323.5, 440.3, -294.5, 468.8, -261.5, 487.4, -217.8, 497, -196.2, 497, -149.2, 486, -99.8, 461, -49.4, 420, -9.5, 378.3, 37.5, 431.6, 90.5, 470.2, 149.5, 491.9, 201.5, 493, 210, 493, 258.9, 476, 284.5, 459, 307.8, 437, 329.1, 406, 339.5, 384, 349.8, 350, 355.2, 315, 354.5, 257.9, 337.5, 168, 305.5, 69.5, 268.5, -14.6, 219.5, -108.7, 154.5, -218)

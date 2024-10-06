@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://ctjvk3p8i150a"]
+
+[ext_resource type="PackedScene" uid="uid://th76117nmfti" path="res://ground/ground_base.tscn" id="1_1nvmq"]
+[ext_resource type="Script" path="res://plant/plant_part.gd" id="2_fm1e0"]
+
+[node name="PlantProp" instance=ExtResource("1_1nvmq")]
+collision_layer = 16
+collision_mask = 11
+script = ExtResource("2_fm1e0")
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="0"]

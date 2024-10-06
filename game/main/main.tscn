@@ -1,74 +1,53 @@
-[gd_scene load_steps=8 format=3 uid="uid://2wqowd4uydil"]
+[gd_scene load_steps=7 format=3 uid="uid://2wqowd4uydil"]
 
 [ext_resource type="PackedScene" uid="uid://b4muiwy510xda" path="res://snail/snail.tscn" id="1_77obm"]
-[ext_resource type="Script" path="res://misc/show_polygon.gd" id="2_n5stn"]
-[ext_resource type="Script" path="res://main/plant.gd" id="3_gxp2c"]
-[ext_resource type="PackedScene" uid="uid://ratt0b7hrhxs" path="res://plant/plant_part.tscn" id="4_orsdx"]
+[ext_resource type="PackedScene" uid="uid://bm1ypnqh4imiw" path="res://ground/ground_poly.tscn" id="3_kianb"]
+[ext_resource type="Texture2D" uid="uid://cfm3qi0rk3jj3" path="res://world/world.svg" id="5_0ce1i"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fmmq8"]
-radius = 70.0
-height = 410.0
+[sub_resource type="AtlasTexture" id="AtlasTexture_igi05"]
+atlas = ExtResource("5_0ce1i")
+region = Rect2(71.6501, 90.59, 188.76, 268.62)
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mb6li"]
-radius = 55.0
-height = 410.0
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ljyjs"]
+normal = Vector2(1, 0)
 
-[sub_resource type="Curve" id="Curve_lr7ag"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.5), -1.75, 0.0, 0, 0]
-point_count = 2
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_na7ue"]
+normal = Vector2(-1, 0)
 
 [node name="Main" type="Node2D"]
 
-[node name="Snail" parent="." instance=ExtResource("1_77obm")]
+[node name="Snail" parent="." node_paths=PackedStringArray("boundary_left", "boundary_right", "boundary_down") instance=ExtResource("1_77obm")]
 unique_name_in_owner = true
 z_index = 10
+boundary_left = NodePath("../Boundaries/BoundaryLeft")
+boundary_right = NodePath("../Boundaries/BoundaryRight")
+boundary_down = NodePath("../Boundaries/BoundaryDownCam")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-position = Vector2(-2258, -1109)
-collision_layer = 4
-collision_mask = 3
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_igi05")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
-polygon = PackedVector2Array(1295, 978, 1644, 1602, 2381, 1754, 3157, 1467, 3542, 647, 4467, 342, 4548, -134, 3901, -71, 1883, 84, 1696, -238, 3264, -861, 6092, 37, 4654, 938, 3422, 2281, 2197, 2344, 1080, 2417, 1448, 2081, 866, 1243, 706, 1723, 396, 1884, 388, 978, 622, 726)
-script = ExtResource("2_n5stn")
+[node name="GroundPoly" parent="." instance=ExtResource("3_kianb")]
 
-[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D/CollisionPolygon2D"]
-z_index = -10
-color = Color(0.165656, 0.165656, 0.165656, 1)
+[node name="CollisionPolygon2D" parent="GroundPoly" index="0"]
+polygon = PackedVector2Array(1863, -702, 1395, -943, 1470, -324, 942.884, 125, 251.458, 125, -257.659, 125, -487, 183, -789, 174, -1000, 125, -1242, -44, -1545, -195, -1752, -227, -2109, -156, -2104, 943, 5, 962, 3099, 1075)
 
-[node name="Plant" type="Node2D" parent="."]
-position = Vector2(-1000, 0)
-script = ExtResource("3_gxp2c")
+[node name="Boundaries" type="Node2D" parent="."]
 
-[node name="PlantPart" parent="Plant" instance=ExtResource("4_orsdx")]
-rotation = 0.174533
-scale = Vector2(1, 1)
+[node name="BoundaryLeft" type="StaticBody2D" parent="Boundaries"]
+position = Vector2(-1750, 0)
+collision_layer = 32
 
-[node name="PlantPart2" parent="Plant/PlantPart" instance=ExtResource("4_orsdx")]
-position = Vector2(0, -250)
-rotation = 0.174533
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/BoundaryLeft"]
+shape = SubResource("WorldBoundaryShape2D_ljyjs")
 
-[node name="CollisionShape2D" parent="Plant/PlantPart/PlantPart2" index="0"]
-shape = SubResource("CapsuleShape2D_fmmq8")
+[node name="BoundaryRight" type="StaticBody2D" parent="Boundaries"]
+position = Vector2(9321, 0)
+collision_layer = 32
 
-[node name="PlantPart3" parent="Plant/PlantPart/PlantPart2" instance=ExtResource("4_orsdx")]
-position = Vector2(0, -250)
-rotation = 0.174533
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/BoundaryRight"]
+shape = SubResource("WorldBoundaryShape2D_na7ue")
 
-[node name="CollisionShape2D" parent="Plant/PlantPart/PlantPart2/PlantPart3" index="0"]
-shape = SubResource("CapsuleShape2D_mb6li")
+[node name="BoundaryDownCam" type="Node2D" parent="Boundaries"]
+position = Vector2(0, 375)
 
-[node name="PlantEnd" type="Node2D" parent="Plant/PlantPart/PlantPart2/PlantPart3" groups=["plantpoint"]]
-position = Vector2(0, -250)
-
-[node name="Line2D" type="Line2D" parent="Plant"]
-points = PackedVector2Array(0, 0, 9, -254, 130, -489, 266, -711)
-width = 160.0
-width_curve = SubResource("Curve_lr7ag")
-default_color = Color(0, 1, 0, 1)
-joint_mode = 2
-begin_cap_mode = 2
-end_cap_mode = 2
-
-[editable path="Plant/PlantPart/PlantPart2"]
-[editable path="Plant/PlantPart/PlantPart2/PlantPart3"]
+[editable path="GroundPoly"]

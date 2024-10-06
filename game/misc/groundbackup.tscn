@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://d0b07x3lrbbcg"]
+
+[ext_resource type="Script" path="res://misc/show_polygon.gd" id="1_lf5u8"]
+
+[node name="Ground" type="StaticBody2D"]
+position = Vector2(-2258, -1109)
+collision_layer = 4
+collision_mask = 3
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(1295, 978, 1644, 1602, 2381, 1754, 3157, 1467, 3542, 647, 4467, 342, 4548, -134, 3901, -71, 1883, 84, 1696, -238, 3264, -861, 6092, 37, 4654, 938, 3422, 2281, 2197, 2344, 1080, 2417, 1448, 2081, 866, 1243, 706, 1723, 396, 1884, 388, 978, 622, 726)
+script = ExtResource("1_lf5u8")
+
+[node name="Polygon2D" type="Polygon2D" parent="CollisionPolygon2D"]
+z_index = -10
+color = Color(0.227451, 0.266667, 0.4, 1)

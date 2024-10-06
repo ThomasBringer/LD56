@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://bm1ypnqh4imiw"]
+
+[ext_resource type="PackedScene" uid="uid://th76117nmfti" path="res://ground/ground_base.tscn" id="1_uebrp"]
+[ext_resource type="Script" path="res://misc/show_polygon.gd" id="2_jndva"]
+
+[node name="GroundPoly" instance=ExtResource("1_uebrp")]
+z_index = -10
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." index="0"]
+polygon = PackedVector2Array(3, 46, -67, 110, -58, 7)
+script = ExtResource("2_jndva")
+
+[node name="Polygon2D" type="Polygon2D" parent="CollisionPolygon2D" index="0"]
+color = Color(0.45098, 0.243137, 0.223529, 1)
