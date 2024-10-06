@@ -198,6 +198,7 @@ volume_db = 3.0
 [connection signal="body_exited" from="RigidBody2D" to="RigidBody2D" method="_on_body_exited"]
 [connection signal="body_entered" from="Follower/PlantDetector" to="Follower/PlantDetector" method="_on_plant_entered"]
 [connection signal="body_exited" from="Follower/PlantDetector" to="Follower/PlantDetector" method="_on_plant_exited"]
+[connection signal="finished" from="Audio/AudioImpact" to="RigidBody2D" method="_on_audio_impact_finished"]
 
 [editable path="Head/SnailEyeLeft"]
 [editable path="Head/SnailEyeRight"]

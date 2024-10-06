@@ -77,7 +77,7 @@ position = Vector2(3152, 101)
 position = Vector2(5510, -485)
 
 [node name="Plant" type="Node2D" parent="."]
-position = Vector2(-1983, -626)
+position = Vector2(-2468, -2673)
 script = ExtResource("3_gxp2c")
 
 [node name="Line2D" type="Line2D" parent="Plant"]
@@ -90,7 +90,7 @@ begin_cap_mode = 2
 end_cap_mode = 2
 
 [node name="PlantPart" parent="Plant" instance=ExtResource("4_orsdx")]
-position = Vector2(468, 498)
+position = Vector2(649, 332)
 rotation = 0.174533
 bend_amount = 2.0
 
@@ -127,56 +127,69 @@ rotation = 0.174533
 position = Vector2(0, -250)
 rotation = 0.1309
 
-[node name="Stopper2" parent="Plant/PlantPart/PlantPart/PlantPart/PlantPart" instance=ExtResource("8_geiuo")]
-position = Vector2(175, 0)
-rotation = 1.5708
-
-[node name="Line2D5" parent="Plant/PlantPart/PlantPart/PlantPart/PlantPart/Stopper2" index="5"]
-points = PackedVector2Array(0, 0, -218.151, 92.9443)
-
-[node name="Line2D6" parent="Plant/PlantPart/PlantPart/PlantPart/PlantPart/Stopper2" index="6"]
-points = PackedVector2Array(0, 0, -83.4156, -84.0768)
-
-[node name="Line2D7" parent="Plant/PlantPart/PlantPart/PlantPart/PlantPart/Stopper2" index="7"]
-points = PackedVector2Array(0, 0, -0.682861, -153.498)
-
-[node name="Line2D8" parent="Plant/PlantPart/PlantPart/PlantPart/PlantPart/Stopper2" index="8"]
-points = PackedVector2Array(0, 0, 62.5741, -113.893)
-
-[node name="Line2D9" parent="Plant/PlantPart/PlantPart/PlantPart/PlantPart/Stopper2" index="9"]
-points = PackedVector2Array(2.88495, -7.67517, 223.368, 68.3992)
-
 [node name="Branch" parent="." instance=ExtResource("9_6yofo")]
 position = Vector2(4414, -1451)
 
 [node name="CollisionPolygon2D" parent="Branch" index="0"]
 polygon = PackedVector2Array(117, -363, 98, 208, -460, -176, -1307, -566, -2078, -423, -2287, -81, -2829, 109, -3161, 79, -3463, 98, -3757, -132, -3440, 0, -3278, -4, -3029, -45, -3182, -400, -3358, -602, -3888, -940, -4377, -952, -4547, -884, -4733, -738, -5014, -688, -5346, -784, -4993, -738, -4747, -823, -4560, -956, -4381, -1037, -3806, -1008, -3275, -668, -3111, -432, -2936, -71, -2668, -136, -2196, -636, -1234, -778)
 
+[node name="Branch2" parent="." instance=ExtResource("9_6yofo")]
+position = Vector2(4414, -1451)
+
+[node name="CollisionPolygon2D" parent="Branch2" index="0"]
+polygon = PackedVector2Array(-7776, -358, -6650, -1982, -6470, -1921, -6322, -1696, -6304, -896, -6167, -886, -6067, -276, -5246, 17, -4600, 39, -4185, -106, -4572, 137, -5125, 118, -4985, 370, -4785, 410, -4961, 418, -5057, 386, -5217, 138, -5709, 2, -5945, -22, -6203, 108, -6081, 1286, -6431, 1311)
+
+[node name="Stopper2" parent="." instance=ExtResource("8_geiuo")]
+position = Vector2(-1190, -157)
+rotation = 0.479007
+
+[node name="Line2D5" parent="Stopper2" index="5"]
+points = PackedVector2Array(0, 0, -279.719, 134.004)
+
+[node name="Line2D6" parent="Stopper2" index="6"]
+points = PackedVector2Array(0, 0, -72.6302, -98.6248)
+
+[node name="Line2D7" parent="Stopper2" index="7"]
+points = PackedVector2Array(0, 0, 1.31763, -147.171)
+
+[node name="Line2D8" parent="Stopper2" index="8"]
+points = PackedVector2Array(0, 0, 69.0099, -107.957)
+
+[node name="Line2D9" parent="Stopper2" index="9"]
+points = PackedVector2Array(0, 0, 306.576, 158.543)
+
 [node name="Stopper" parent="." instance=ExtResource("8_geiuo")]
-position = Vector2(-222, -2074)
+position = Vector2(-623, -2022)
+
+[node name="Line2D" parent="Stopper" index="1"]
+points = PackedVector2Array(-94, -2, -74, 58, 0, 128, 79, 76, 104, 4, 70, -113, -1, -158, -80, -92)
 
 [node name="Line2D2" parent="Stopper" index="2"]
-points = PackedVector2Array(0, 0, 80, 105)
+points = PackedVector2Array(0, 0, 72, 78)
 
 [node name="Line2D3" parent="Stopper" index="3"]
-points = PackedVector2Array(0, 0, 5, 129)
+points = PackedVector2Array(0, 0, -1, 120)
 
 [node name="Line2D4" parent="Stopper" index="4"]
-points = PackedVector2Array(0, 0, -82, 102)
+points = PackedVector2Array(0, 0, -77, 58)
 
 [node name="Line2D5" parent="Stopper" index="5"]
-points = PackedVector2Array(0, 0, -258, -85)
+points = PackedVector2Array(0, 0, -221, -183)
 
 [node name="Line2D6" parent="Stopper" index="6"]
-points = PackedVector2Array(0, 0, -109, -143)
+points = PackedVector2Array(0, 0, -136, -180)
+
+[node name="Line2D7" parent="Stopper" index="7"]
+points = PackedVector2Array(0, 0, 1, -146)
 
 [node name="Line2D8" parent="Stopper" index="8"]
-points = PackedVector2Array(0, 0, 183, -321)
+points = PackedVector2Array(0, 0, 149, -159)
 
 [node name="Line2D9" parent="Stopper" index="9"]
-points = PackedVector2Array(0, 0, 413, -338)
+points = PackedVector2Array(0, 0, 302, -180)
 
 [editable path="GroundPoly"]
-[editable path="Plant/PlantPart/PlantPart/PlantPart/PlantPart/Stopper2"]
 [editable path="Branch"]
+[editable path="Branch2"]
+[editable path="Stopper2"]
 [editable path="Stopper"]
