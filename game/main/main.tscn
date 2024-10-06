@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://2wqowd4uydil"]
+[gd_scene load_steps=42 format=3 uid="uid://2wqowd4uydil"]
 
 [ext_resource type="PackedScene" uid="uid://b4muiwy510xda" path="res://snail/snail.tscn" id="1_77obm"]
 [ext_resource type="AudioStream" uid="uid://cs03edgk0ym1g" path="res://audio/garden-ambience-236744.mp3" id="1_askrw"]
@@ -24,6 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://dieq5cbu0fspe" path="res://ladybug/ladybug_icon.svg" id="21_45xs8"]
 [ext_resource type="PackedScene" uid="uid://cbwnfasji00c3" path="res://ground/normal props/rake.tscn" id="22_mbeeu"]
 [ext_resource type="PackedScene" uid="uid://du5u0escyubkj" path="res://muhsroom/mushroom.tscn" id="22_t8e33"]
+[ext_resource type="Shader" path="res://misc/circle_reveal.gdshader" id="25_chf0h"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_aekaq"]
 shader = ExtResource("15_vjkhb")
@@ -74,6 +75,50 @@ region = Rect2(653.572, 54.4483, 485.738, 575.34)
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qkdre"]
 radius = 200.0
 height = 2200.0
+
+[sub_resource type="Animation" id="Animation_cdv8r"]
+resource_name = "circle"
+length = 3.0
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/ColorRect:material:shader_parameter/radius")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1, 0.5, 1.5, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 150.0, 150.0, 4450.0]
+}
+
+[sub_resource type="Animation" id="Animation_fpsut"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/ColorRect:material:shader_parameter/radius")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [150.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jfye4"]
+_data = {
+"RESET": SubResource("Animation_fpsut"),
+"circle": SubResource("Animation_cdv8r")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xkceq"]
+shader = ExtResource("25_chf0h")
+shader_parameter/radius = 150.0
+shader_parameter/offset = Vector2(0, 270)
+shader_parameter/color = Color(0.14902, 0.168627, 0.266667, 1)
 
 [node name="Main" type="Node2D"]
 
@@ -287,7 +332,7 @@ rotation = -1.41132
 texture = SubResource("AtlasTexture_nw1dg")
 
 [node name="ParallaxBackground2" type="ParallaxBackground" parent="."]
-layer = 100
+layer = 0
 
 [node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground2"]
 modulate = Color(0.243137, 0.152941, 0.192157, 1)
@@ -1458,6 +1503,24 @@ rotation = -0.556497
 [node name="Mushroom7" parent="." instance=ExtResource("22_t8e33")]
 position = Vector2(4853, -2090)
 rotation = 0.308863
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_jfye4")
+}
+autoplay = "circle"
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+z_index = 4096
+material = SubResource("ShaderMaterial_xkceq")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [editable path="Stopper3"]
 [editable path="GroundPoly"]
