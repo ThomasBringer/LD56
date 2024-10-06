@@ -1,6 +1,7 @@
-[gd_scene load_steps=16 format=3 uid="uid://2wqowd4uydil"]
+[gd_scene load_steps=21 format=3 uid="uid://2wqowd4uydil"]
 
 [ext_resource type="PackedScene" uid="uid://b4muiwy510xda" path="res://snail/snail.tscn" id="1_77obm"]
+[ext_resource type="AudioStream" uid="uid://cs03edgk0ym1g" path="res://audio/garden-ambience-236744.mp3" id="1_askrw"]
 [ext_resource type="Script" path="res://main/plant.gd" id="3_gxp2c"]
 [ext_resource type="PackedScene" uid="uid://bm1ypnqh4imiw" path="res://ground/ground_poly.tscn" id="3_kianb"]
 [ext_resource type="PackedScene" uid="uid://cqedsbp3sxn4t" path="res://plant/plants/grass.tscn" id="4_a41y7"]
@@ -11,7 +12,10 @@
 [ext_resource type="PackedScene" uid="uid://c2m5f5n5nuty3" path="res://ground/stopper.tscn" id="8_geiuo"]
 [ext_resource type="PackedScene" uid="uid://7vpdscomc3jn" path="res://ground/normal props/stump.tscn" id="9_1y5qf"]
 [ext_resource type="PackedScene" uid="uid://d0pmsqckmoevo" path="res://ground/normal props/branch.tscn" id="9_6yofo"]
+[ext_resource type="PackedScene" uid="uid://140nvc0woc67" path="res://ground/plant props/leaf_3.tscn" id="11_bllld"]
+[ext_resource type="PackedScene" uid="uid://c0ic3qxnloe0h" path="res://ground/plant props/leaf_2.tscn" id="12_d5l22"]
 [ext_resource type="PackedScene" uid="uid://djb6dgn4hxfg2" path="res://ground/plant props/leaf_4.tscn" id="12_gxki3"]
+[ext_resource type="Shader" path="res://misc/mix colors.gdshader" id="15_vjkhb"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ljyjs"]
 normal = Vector2(1, 0)
@@ -23,7 +27,18 @@ normal = Vector2(-1, 0)
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.5), -1.75, 0.0, 0, 0]
 point_count = 2
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_aekaq"]
+shader = ExtResource("15_vjkhb")
+shader_parameter/color1 = Color(0.243137, 0.152941, 0.192157, 1)
+shader_parameter/color2 = Color(0.243137, 0.537255, 0.282353, 1)
+shader_parameter/t = 0.5
+
 [node name="Main" type="Node2D"]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_askrw")
+volume_db = -10.0
+autoplay = true
 
 [node name="Snail" parent="." node_paths=PackedStringArray("boundary_left", "boundary_right", "boundary_down") instance=ExtResource("1_77obm")]
 unique_name_in_owner = true
@@ -77,7 +92,7 @@ position = Vector2(3152, 101)
 position = Vector2(5510, -485)
 
 [node name="Plant" type="Node2D" parent="."]
-position = Vector2(-2468, -2673)
+position = Vector2(-2531, -3158)
 script = ExtResource("3_gxp2c")
 
 [node name="Line2D" type="Line2D" parent="Plant"]
@@ -90,7 +105,7 @@ begin_cap_mode = 2
 end_cap_mode = 2
 
 [node name="PlantPart" parent="Plant" instance=ExtResource("4_orsdx")]
-position = Vector2(649, 332)
+position = Vector2(838, 306)
 rotation = 0.174533
 bend_amount = 2.0
 
@@ -127,20 +142,88 @@ rotation = 0.174533
 position = Vector2(0, -250)
 rotation = 0.1309
 
+[node name="Plant2" type="Node2D" parent="."]
+position = Vector2(2342, -2406)
+script = ExtResource("3_gxp2c")
+
+[node name="Line2D" type="Line2D" parent="Plant2"]
+points = PackedVector2Array(0, 0, -315, -286, -410, -605, -543, -981)
+width = 160.0
+width_curve = SubResource("Curve_lr7ag")
+default_color = Color(0.388235, 0.780392, 0.301961, 1)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="PlantPart" parent="Plant2" instance=ExtResource("4_orsdx")]
+position = Vector2(-86, -35)
+rotation = -1.24617
+
+[node name="PlantPart2" parent="Plant2/PlantPart" instance=ExtResource("4_orsdx")]
+position = Vector2(0.228205, -250.138)
+rotation = -0.349066
+
+[node name="Leaf3" parent="Plant2/PlantPart/PlantPart2" instance=ExtResource("11_bllld")]
+position = Vector2(0, -250)
+
+[node name="Plant4" type="Node2D" parent="."]
+position = Vector2(-438, -1016)
+script = ExtResource("3_gxp2c")
+
+[node name="Line2D" type="Line2D" parent="Plant4"]
+points = PackedVector2Array(0, 0, -315, -286, -410, -605, -543, -981)
+width = 160.0
+width_curve = SubResource("Curve_lr7ag")
+default_color = Color(0.388235, 0.780392, 0.301961, 1)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="PlantPart" parent="Plant4" instance=ExtResource("4_orsdx")]
+position = Vector2(-347, -386)
+rotation = 2.25491
+
+[node name="PlantPart2" parent="Plant4/PlantPart" instance=ExtResource("4_orsdx")]
+position = Vector2(0.228205, -250.138)
+rotation = -0.349066
+
+[node name="Leaf3" parent="Plant4/PlantPart/PlantPart2" instance=ExtResource("11_bllld")]
+position = Vector2(0, -250)
+
+[node name="Plant3" type="Node2D" parent="."]
+position = Vector2(3635, -2203)
+script = ExtResource("3_gxp2c")
+
+[node name="Line2D" type="Line2D" parent="Plant3"]
+points = PackedVector2Array(0, 0, -315, -286, -410, -605, -543, -981)
+width = 160.0
+width_curve = SubResource("Curve_lr7ag")
+default_color = Color(0.388235, 0.780392, 0.301961, 1)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="PlantPart" parent="Plant3" instance=ExtResource("4_orsdx")]
+rotation = -2.23547
+
+[node name="Leaf2" parent="Plant3/PlantPart" instance=ExtResource("12_d5l22")]
+position = Vector2(0, -250)
+rotation = -0.364511
+
 [node name="Branch" parent="." instance=ExtResource("9_6yofo")]
-position = Vector2(4414, -1451)
+position = Vector2(4351, -1936)
 
 [node name="CollisionPolygon2D" parent="Branch" index="0"]
-polygon = PackedVector2Array(117, -363, 98, 208, -460, -176, -1307, -566, -2078, -423, -2287, -81, -2829, 109, -3161, 79, -3463, 98, -3757, -132, -3440, 0, -3278, -4, -3029, -45, -3182, -400, -3358, -602, -3888, -940, -4377, -952, -4547, -884, -4733, -738, -5014, -688, -5346, -784, -4993, -738, -4747, -823, -4560, -956, -4381, -1037, -3806, -1008, -3275, -668, -3111, -432, -2936, -71, -2668, -136, -2196, -636, -1234, -778)
+polygon = PackedVector2Array(135, 166, 75, 766, -524, -37, -997, -343, -1854, -409, -1951, 163, -2082, 435, -2420, 566, -2676, 472, -2766, 211, -2955, 117, -3161, 79, -3463, 98, -3757, -132, -3440, 0, -3278, -4, -3029, -45, -3182, -400, -3358, -602, -3888, -940, -4377, -952, -4547, -884, -4733, -738, -5014, -688, -5346, -784, -4993, -738, -4747, -823, -4560, -956, -4381, -1037, -3806, -1008, -3275, -668, -3111, -432, -2936, -71, -2706, 28, -2592, 333, -2435, 376, -2179, 286, -2098, 6, -2042, -613, -932, -553)
 
 [node name="Branch2" parent="." instance=ExtResource("9_6yofo")]
-position = Vector2(4414, -1451)
+position = Vector2(4351, -1936)
 
 [node name="CollisionPolygon2D" parent="Branch2" index="0"]
-polygon = PackedVector2Array(-7776, -358, -6650, -1982, -6470, -1921, -6322, -1696, -6304, -896, -6167, -886, -6067, -276, -5246, 17, -4600, 39, -4185, -106, -4572, 137, -5125, 118, -4985, 370, -4785, 410, -4961, 418, -5057, 386, -5217, 138, -5709, 2, -5945, -22, -6203, 108, -6081, 1286, -6431, 1311)
+polygon = PackedVector2Array(-7776, -358, -7429, -1982, -7302, -2737, -6513, -3296, -5971, -3330, -6106, -931, -5978, -903, -5985, -397, -5913, -231, -5246, 17, -4628, -50, -4317, -224, -4160, -205, -4317, -174, -4564, 9, -5125, 118, -4985, 370, -4226, 357, -4131, 399, -4242, 435, -4480, 435, -5000, 496, -5291, 663, -5303, 825, -5402, 650, -5174, 408, -5323, 133, -5709, 2, -5945, -22, -6203, 108, -6122, 1790, -7448, 2296)
 
 [node name="Stopper2" parent="." instance=ExtResource("8_geiuo")]
-position = Vector2(-1190, -157)
+position = Vector2(-1334, -200)
 rotation = 0.479007
 
 [node name="Line2D5" parent="Stopper2" index="5"]
@@ -159,7 +242,7 @@ points = PackedVector2Array(0, 0, 69.0099, -107.957)
 points = PackedVector2Array(0, 0, 306.576, 158.543)
 
 [node name="Stopper" parent="." instance=ExtResource("8_geiuo")]
-position = Vector2(-623, -2022)
+position = Vector2(-686, -2507)
 
 [node name="Line2D" parent="Stopper" index="1"]
 points = PackedVector2Array(-94, -2, -74, 58, 0, 128, 79, 76, 104, 4, 70, -113, -1, -158, -80, -92)
@@ -188,8 +271,89 @@ points = PackedVector2Array(0, 0, 149, -159)
 [node name="Line2D9" parent="Stopper" index="9"]
 points = PackedVector2Array(0, 0, 302, -180)
 
+[node name="Sign" parent="." instance=ExtResource("3_kianb")]
+position = Vector2(-531, 3)
+
+[node name="CollisionPolygon2D" parent="Sign" index="0"]
+polygon = PackedVector2Array(-341, -458, -281, -191, -91.3286, -216.053, -9, 197, 66, 200, -24.0491, -225.771, 136, -244, 76, -515)
+
+[node name="Polygon2D" parent="Sign/CollisionPolygon2D" index="0"]
+color = Color(0.243137, 0.152941, 0.192157, 1)
+
+[node name="Polygon2D2" type="Polygon2D" parent="Sign"]
+color = Color(0.45098, 0.243137, 0.223529, 1)
+polygon = PackedVector2Array(-275, -398, -144, -416, -113, -258, -244, -241)
+
+[node name="Polygon2D3" type="Polygon2D" parent="Sign"]
+color = Color(0.45098, 0.243137, 0.223529, 1)
+polygon = PackedVector2Array(-74, -427, 61, -447, 92, -288, -50, -272)
+
+[node name="Polygon2D4" type="Polygon2D" parent="Sign"]
+color = Color(0.243137, 0.152941, 0.192157, 1)
+polygon = PackedVector2Array(-166, -369, -146, -285, -232, -314)
+
+[node name="Polygon2D5" type="Polygon2D" parent="Sign"]
+color = Color(0.243137, 0.152941, 0.192157, 1)
+polygon = PackedVector2Array(-35, -386, 53, -367, -17, -307)
+
+[node name="Sign3" parent="." instance=ExtResource("3_kianb")]
+position = Vector2(125, -1516)
+
+[node name="CollisionPolygon2D" parent="Sign3" index="0"]
+position = Vector2(-36, 40)
+polygon = PackedVector2Array(-231, -456, -260, -223, -88, -223, -137, -66, -65, -67, -24.0491, -225.771, 163, -228, 188, -468)
+
+[node name="Polygon2D" parent="Sign3/CollisionPolygon2D" index="0"]
+color = Color(0.243137, 0.152941, 0.192157, 1)
+
+[node name="Polygon2D2" type="Polygon2D" parent="Sign3"]
+color = Color(0.45098, 0.243137, 0.223529, 1)
+polygon = PackedVector2Array(-233, -326, 83, -335, 85, -242, -244, -241)
+
+[node name="Polygon2D4" type="Polygon2D" parent="Sign3"]
+color = Color(0.243137, 0.152941, 0.192157, 1)
+polygon = PackedVector2Array(53, -264, -192, -265, -192, -300, -174, -302, -175, -280, 31, -276, 29, -306, 48, -309)
+
+[node name="Sign2" parent="." instance=ExtResource("3_kianb")]
+position = Vector2(4171, -583)
+
+[node name="CollisionPolygon2D" parent="Sign2" index="0"]
+polygon = PackedVector2Array(-558, 216, -418, 136, -312, 235, -291, 48, 218, 43, 220, -20, -285, -7, -259, -187, -398, -320, -543, -183)
+
+[node name="Polygon2D" parent="Sign2/CollisionPolygon2D" index="0"]
+color = Color(0.243137, 0.152941, 0.192157, 1)
+
+[node name="Polygon2D2" type="Polygon2D" parent="Sign2"]
+color = Color(0.45098, 0.243137, 0.223529, 1)
+polygon = PackedVector2Array(-500, -165, -402, -259, -311, -153, -338, 130, -421, 47, -511, 118)
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+material = SubResource("ShaderMaterial_aekaq")
+motion_scale = Vector2(0.5, 0.5)
+
+[node name="ColorRect" type="ColorRect" parent="ParallaxBackground/ParallaxLayer"]
+visible = false
+offset_left = -1116.0
+offset_top = -2496.0
+offset_right = 3197.0
+offset_bottom = 1040.0
+color = Color(1, 0, 0, 1)
+
+[node name="Polygon2D" type="Polygon2D" parent="ParallaxBackground/ParallaxLayer"]
+use_parent_material = true
+polygon = PackedVector2Array(-1342, 1370, -1300, -2988, -742, -2988, -571, -946, 135, -1160, 390, -1661, 459, -2030, 545, -2407, 573, -2613, 613, -2286, 551, -1816, 866, -1742, 1133, -1507, 1496, -1197, 1192, -1328, 818, -1588, 497, -1544, 219, -1005, -337.41, -733.065, -474, -474, -438, -216, -234, -382, -218, -618, -146, -342, -411.044, -92.7942, -357.47, 231.606, 18, 118, 132, -113, 223, -170, 203, -32, 283, -12, 805, -227, 838, -658, 949, -264, 905, -158, 721, -59, 690, 92, 758, 220, 879, 304, 657, 318, 559, 39, 148, 183, -18, 284, -195, 334, -74, 455, 122, 522, 304, 683, 354, 1016, 230, 801, 61, 643, -349, 482, -256, 1020, -192, 1334)
+
+[node name="Polygon2D2" type="Polygon2D" parent="ParallaxBackground/ParallaxLayer"]
+use_parent_material = true
+polygon = PackedVector2Array(2730, 1309, 4664, 1320, 3861, -818, 2786, -3556, 1994, -3081, 2930, -601)
+
 [editable path="GroundPoly"]
 [editable path="Branch"]
 [editable path="Branch2"]
 [editable path="Stopper2"]
 [editable path="Stopper"]
+[editable path="Sign"]
+[editable path="Sign3"]
+[editable path="Sign2"]
