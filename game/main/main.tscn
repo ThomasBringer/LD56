@@ -951,7 +951,7 @@ color = Color(0.243137, 0.152941, 0.192157, 1)
 
 [node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Things/Branch"]
 position = Vector2(7414, -1117)
-polygon = PackedVector2Array(-745, -590, -1220, -1113, -1735, -1367, -2165, -1379, -2391, -1171, -2452, -852, -2234, -681, -2024, -676, -1891, -795, -1861, -966, -1824, -1042, -1820, -777, -1976, -545, -2319, -577, -2588, -716, -2574, -1241, -2374, -1581, -1966.98, -1585.23, -1700, -1588, -2288, -2087, -3254.6, -2180.28, -3505, -2144, -3735, -1961, -3687, -2107, -3468, -2308, -2764, -2376, -1478, -1921, -1094, -1495, -699, -1252, -353, -1478, -465, 578)
+polygon = PackedVector2Array(-745, -590, -1220, -1113, -1735, -1367, -2165, -1379, -2391, -1171, -2452, -852, -2234, -681, -2024, -676, -1891, -795, -1861, -966, -1824, -1042, -1820, -777, -1976, -545, -2319, -577, -2588, -716, -2574, -1241, -2374, -1581, -1966.98, -1585.23, -1700, -1588, -2288, -2087, -3254.6, -2180.28, -3505, -2144, -3735, -1961, -3687, -2107, -3468, -2308, -2764, -2376, -1576, -1944, -1613, -1904, -1811, -1924, -1491, -1571, -708, -1201, -353, -1478, -465, 578)
 script = ExtResource("17_vndto")
 
 [node name="Polygon2D" type="Polygon2D" parent="Things/Branch/CollisionPolygon2D3"]
@@ -1121,12 +1121,12 @@ theme_override_font_sizes/font_size = 125
 text = "HOLD"
 
 [node name="Sign6" parent="Things" instance=ExtResource("3_kianb")]
-position = Vector2(9966, -6516)
+position = Vector2(9894, -5807)
 rotation = 0.0366081
 
 [node name="CollisionPolygon2D" parent="Things/Sign6" index="0"]
 position = Vector2(-36, 40)
-polygon = PackedVector2Array(-582.517, -725.822, -576.036, -193.703, 591.646, -196.441, 752.786, -714.687, 133.472, -719.851, 117.649, -1034.65, 1.53418, -1008.39, 27.5664, -720.734)
+polygon = PackedVector2Array(-582.517, -725.822, -576.036, -193.703, 591.646, -196.441, 752.786, -714.687, 133.472, -719.851, 306.726, -1801.09, 15.1191, -1730.37, 27.5664, -720.734)
 
 [node name="Polygon2D" parent="Things/Sign6/CollisionPolygon2D" index="0"]
 color = Color(0.243137, 0.152941, 0.192157, 1)
@@ -1188,7 +1188,7 @@ rotation = 0.0366081
 
 [node name="CollisionPolygon2D" parent="Things/Sign7" index="0"]
 position = Vector2(-36, 40)
-polygon = PackedVector2Array(382.11, -972.293, 277.277, -1293.67, -393.188, -938.895, -246.774, -657.064, 70.4092, -821.784, 436.014, -648.049, 421.738, -764.604, 167.696, -870.377)
+polygon = PackedVector2Array(382.11, -972.293, 277.277, -1293.67, -418.254, -912.959, -324.329, -616.198, 70.4092, -821.784, 436.014, -648.049, 421.738, -764.604, 167.696, -870.377)
 
 [node name="Polygon2D" parent="Things/Sign7/CollisionPolygon2D" index="0"]
 color = Color(0.243137, 0.152941, 0.192157, 1)
@@ -1203,15 +1203,16 @@ modulate = Color(0.45098, 0.243137, 0.223529, 1)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -693.583
-offset_top = -152.038
-offset_right = 514.417
-offset_bottom = 76.9615
+offset_left = -1487.51
+offset_top = -158.755
+offset_right = -279.51
+offset_bottom = 70.2447
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/font = ExtResource("18_bgimw")
 theme_override_font_sizes/font_size = 175
-text = "0/10"
+text = "32/35"
+horizontal_alignment = 2
 script = ExtResource("20_bumb4")
 
 [node name="LadybugIcon" type="Sprite2D" parent="Things/Sign7/Node2D"]
@@ -1310,7 +1311,7 @@ position = Vector2(7090, -4622)
 position = Vector2(8590, -6232)
 
 [node name="Ladybug32" parent="Things" instance=ExtResource("18_u2e3k")]
-position = Vector2(9315, -6342)
+position = Vector2(9621, -6731)
 
 [node name="Ladybug33" parent="Things" instance=ExtResource("18_u2e3k")]
 position = Vector2(10704, -6618)
@@ -1325,7 +1326,7 @@ position = Vector2(11034, -4712)
 position = Vector2(7188, -3843)
 
 [node name="Ladybug30" parent="Things" instance=ExtResource("18_u2e3k")]
-position = Vector2(7562, -4279)
+position = Vector2(8598, -5009)
 
 [node name="Ladybug16" parent="Things" instance=ExtResource("18_u2e3k")]
 position = Vector2(8350, -980)
@@ -1431,7 +1432,7 @@ begin_cap_mode = 2
 end_cap_mode = 2
 
 [node name="Mushroom" parent="Things" instance=ExtResource("22_t8e33")]
-position = Vector2(7856, -3813)
+position = Vector2(7621, -3989)
 rotation = 0.518898
 
 [node name="Mushroom" parent="." instance=ExtResource("22_t8e33")]

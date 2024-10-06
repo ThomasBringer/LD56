@@ -25,13 +25,14 @@ var Is_Shelled: bool:
 		if val == is_shelled: return
 		is_shelled = val
 		if val:
+			
 			rigid_body.woosh_ready = true
 			audio_slither.stop()
 			head.z_index = 0
 			audio_in_shell.play()
 			
 			rigid_body.rotation = 0
-			rigid_body.linear_velocity = Vector2.ZERO
+			rigid_body.linear_velocity = character_body.velocity
 			rigid_body.angular_velocity = 0
 			
 			remove_child(character_body)

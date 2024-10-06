@@ -141,7 +141,6 @@ func move(col: KinematicCollision2D, delta: float, backup_pos: Vector2, rot: boo
 	#return false
 
 func clamp_pos():
-	return
 	on_boundary = position.x < b_left or position.x > b_right
 	if on_boundary:
 		audio_slither.stop()

@@ -167,7 +167,6 @@ antialiased = true
 position = Vector2(175, -100)
 
 [node name="Pupil" parent="Head/SnailEyeLeft" index="1"]
-z_index = 1
 position = Vector2(175, -100)
 
 [node name="SnailEyeRight" parent="Head" instance=ExtResource("10_2bcae")]
@@ -176,7 +175,6 @@ position = Vector2(175, -100)
 position = Vector2(225, -100)
 
 [node name="Pupil" parent="Head/SnailEyeRight" index="1"]
-z_index = 1
 position = Vector2(225, -100)
 
 [node name="Audio" type="Node" parent="."]
