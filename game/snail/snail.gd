@@ -6,6 +6,8 @@ extends Node2D
 @onready var audio_out_shell: AudioStreamPlayer = $Audio/AudioOutShell
 @onready var audio_in_shell: AudioStreamPlayer = $Audio/AudioInShell
 
+@onready var head: Node2D = $Head
+
 var is_shelled: bool = false
 var Is_Shelled: bool:
 	get:
@@ -13,6 +15,7 @@ var Is_Shelled: bool:
 	set(val):
 		is_shelled = val
 		if val:
+			head.z_index = 0
 			audio_in_shell.play()
 			
 			rigid_body.rotation = 0
@@ -23,6 +26,7 @@ var Is_Shelled: bool:
 			rigid_body.position = character_body.position
 			add_child(rigid_body)
 		else:
+			head.z_index = 2
 			audio_out_shell.play()
 			
 			remove_child(rigid_body)

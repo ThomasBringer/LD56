@@ -14,9 +14,9 @@ extends Node2D
 @onready var points: Array[Node2D] = [point1, point2, point3, point4, point5]
 
 @onready var line_trail: Line2D = $"../../../LineTrail"
-@onready var head_trail: Line2D = $"../../../HeadTrail"
-@onready var eye_trail_left: Line2D = $"../../../EyeTrailLeft"
-@onready var eye_trail_right: Line2D = $"../../../EyeTrailRight"
+@onready var head_trail: Line2D = $"../../../Head/HeadTrail"
+@onready var eye_trail_left: Line2D = $"../../../Head/EyeTrailLeft"
+@onready var eye_trail_right: Line2D = $"../../../Head/EyeTrailRight"
 
 @onready var head_offset: Vector2 = head_trail.get_point_position(1) - head_trail.get_point_position(0)
 func get_head_offset_relative() -> Vector2:

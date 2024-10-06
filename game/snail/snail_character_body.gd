@@ -75,7 +75,7 @@ func _physics_process(delta: float) -> void:
 
 func _input(event):
 	if event.is_action_pressed("move_left") or event.is_action_pressed("move_right"):
-		input_multiplier = 1 if abs(rotator_node.global_rotation) <= PI/2 else -1
+		#input_multiplier = 1 if abs(rotator_node.global_rotation) <= PI/2 else -1
 		audio_slither.play()
 	elif (event.is_action_released("move_left") and not Input.is_action_pressed("move_right")) or (event.is_action_released("move_right") and not Input.is_action_pressed("move_left")):
 		audio_slither.stop()
