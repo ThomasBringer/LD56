@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://2wqowd4uydil"]
+[gd_scene load_steps=26 format=3 uid="uid://2wqowd4uydil"]
 
 [ext_resource type="PackedScene" uid="uid://b4muiwy510xda" path="res://snail/snail.tscn" id="1_77obm"]
 [ext_resource type="AudioStream" uid="uid://cs03edgk0ym1g" path="res://audio/garden-ambience-236744.mp3" id="1_askrw"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bm1ypnqh4imiw" path="res://ground/ground_poly.tscn" id="3_kianb"]
 [ext_resource type="PackedScene" uid="uid://cqedsbp3sxn4t" path="res://plant/plants/grass.tscn" id="4_a41y7"]
 [ext_resource type="PackedScene" uid="uid://ratt0b7hrhxs" path="res://plant/plant_part.tscn" id="4_orsdx"]
+[ext_resource type="Texture2D" uid="uid://cfm3qi0rk3jj3" path="res://world/world.svg" id="5_0ce1i"]
 [ext_resource type="PackedScene" uid="uid://cn5f55ghqr4w8" path="res://plant/plants/grass variants/grass_2.tscn" id="5_cbf84"]
 [ext_resource type="PackedScene" uid="uid://boel460a0aig6" path="res://plant/plants/grass variants/grass_3.tscn" id="6_y4a1b"]
 [ext_resource type="PackedScene" uid="uid://xo3mvivdkf73" path="res://plant/plants/grass variants/grass_4.tscn" id="7_1rm36"]
@@ -17,6 +18,30 @@
 [ext_resource type="PackedScene" uid="uid://djb6dgn4hxfg2" path="res://ground/plant props/leaf_4.tscn" id="12_gxki3"]
 [ext_resource type="Shader" path="res://misc/mix colors.gdshader" id="15_vjkhb"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_aekaq"]
+shader = ExtResource("15_vjkhb")
+shader_parameter/color1 = Color(0.243137, 0.152941, 0.192157, 1)
+shader_parameter/color2 = Color(0.243137, 0.537255, 0.282353, 1)
+shader_parameter/t = 0.5
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mx278"]
+atlas = ExtResource("5_0ce1i")
+region = Rect2(1163, 45.3523, 767.671, 1024.57)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gkwod"]
+atlas = ExtResource("5_0ce1i")
+region = Rect2(653.572, 54.4483, 485.738, 575.34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nw1dg"]
+atlas = ExtResource("5_0ce1i")
+region = Rect2(340.87, 67.6301, 220.22, 343.64)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fqw5i"]
+shader = ExtResource("15_vjkhb")
+shader_parameter/color1 = Color(0.243137, 0.152941, 0.192157, 1)
+shader_parameter/color2 = null
+shader_parameter/t = 0.35
+
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ljyjs"]
 normal = Vector2(1, 0)
 
@@ -27,18 +52,300 @@ normal = Vector2(-1, 0)
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.5), -1.75, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_aekaq"]
-shader = ExtResource("15_vjkhb")
-shader_parameter/color1 = Color(0.243137, 0.152941, 0.192157, 1)
-shader_parameter/color2 = Color(0.243137, 0.537255, 0.282353, 1)
-shader_parameter/t = 0.5
-
 [node name="Main" type="Node2D"]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("1_askrw")
-volume_db = -10.0
 autoplay = true
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+z_index = -100
+material = SubResource("ShaderMaterial_aekaq")
+motion_scale = Vector2(0.5, 0.5)
+
+[node name="ColorRect" type="ColorRect" parent="ParallaxBackground/ParallaxLayer"]
+visible = false
+offset_left = -1116.0
+offset_top = -2496.0
+offset_right = 3197.0
+offset_bottom = 1040.0
+color = Color(1, 0, 0, 1)
+
+[node name="Polygon2D" type="Polygon2D" parent="ParallaxBackground/ParallaxLayer"]
+use_parent_material = true
+polygon = PackedVector2Array(-1342, 1370, -1300, -2988, -742, -2988, -571, -946, 135, -1160, 390, -1661, 459, -2030, 545, -2407, 573, -2613, 613, -2286, 551, -1816, 866, -1742, 1133, -1507, 1496, -1197, 1192, -1328, 818, -1588, 497, -1544, 219, -1005, -337.41, -733.065, -474, -474, -438, -216, -234, -382, -218, -618, -146, -342, -411.044, -92.7942, -357.47, 231.606, 18, 118, 132, -113, 223, -170, 203, -32, 283, -12, 805, -227, 838, -658, 949, -264, 905, -158, 721, -59, 690, 92, 758, 220, 879, 304, 747, 293, 559, 39, 148, 183, -18, 284, -195, 334, -74, 455, 122, 522, 304, 683, 354, 1016, 230, 801, 61, 643, -349, 482, -256, 1020, -192, 1334)
+
+[node name="Polygon2D2" type="Polygon2D" parent="ParallaxBackground/ParallaxLayer"]
+use_parent_material = true
+polygon = PackedVector2Array(2730, 1309, 4664, 1320, 3861, -818, 2786, -3556, 1994, -3081, 2746.97, -1085.96, 2753, -878, 2448, -978, 2329.33, -1127.54, 2409, -1274, 2391, -1496, 2225, -1259, 1942, -1485, 1614, -1290, 1918, -1378, 1968, -1249, 2387, -859, 2930, -601)
+
+[node name="Polygon2D3" type="Polygon2D" parent="ParallaxBackground/ParallaxLayer"]
+use_parent_material = true
+polygon = PackedVector2Array(683, -4055, 783.146, -3375.37, 756, -3131, 398, -3408, 277, -3751, 54, -4022, 23, -3770, 328, -3230, 859.616, -2856.42, 1109, -1164, 770, -1285, 474, -1114, 396, -736, 385, -373, 537, -775, 685, -1098, 959, -1110, 1175.31, -878.74, 1240, -111, 1240, 534.976, 1078, 564, 850, 468, 598, 245, 726, 530, 1240, 753.79, 1240, 1328, 1977, 1184, 1718.18, 341.079, 1674.04, 197.322, 1868, -36, 2063, -193, 2239, -98, 2268, 135, 2096, 335, 1911, 354, 2092, 487, 2439, 192, 2301, -198, 2077, -378, 1611, -8, 1492, -393, 1847, -865, 2103, -897, 1927, -1041, 1701, -964, 1430, -653, 1351, -1106, 1177.34, -2616.23, 1638, -3024, 1911, -3411, 1588, -3316, 1134.94, -2984.96, 1005, -4115)
+
+[node name="Sprite2D25" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+use_parent_material = true
+position = Vector2(-235, -2312)
+rotation = 1.94025
+texture = SubResource("AtlasTexture_mx278")
+
+[node name="Sprite2D26" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+use_parent_material = true
+position = Vector2(1817, -1848)
+rotation = -0.260403
+texture = SubResource("AtlasTexture_mx278")
+
+[node name="Sprite2D27" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+use_parent_material = true
+position = Vector2(649, 1141)
+rotation = 2.23954
+texture = SubResource("AtlasTexture_mx278")
+
+[node name="Sprite2D28" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+use_parent_material = true
+position = Vector2(795, -761)
+rotation = -0.264344
+texture = SubResource("AtlasTexture_gkwod")
+
+[node name="Sprite2D29" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+use_parent_material = true
+position = Vector2(2153, -767)
+rotation = 2.41077
+texture = SubResource("AtlasTexture_gkwod")
+
+[node name="Sprite2D36" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+use_parent_material = true
+position = Vector2(2592, 221)
+rotation = 1.77344
+texture = SubResource("AtlasTexture_gkwod")
+
+[node name="Sprite2D30" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+use_parent_material = true
+position = Vector2(553, -2679)
+rotation = -0.137662
+texture = SubResource("AtlasTexture_gkwod")
+
+[node name="Sprite2D31" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+use_parent_material = true
+position = Vector2(1969, -3467)
+rotation = 1.22335
+texture = SubResource("AtlasTexture_gkwod")
+
+[node name="Sprite2D32" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+use_parent_material = true
+position = Vector2(-451, -1313)
+rotation = 1.22091
+texture = SubResource("AtlasTexture_gkwod")
+
+[node name="Sprite2D33" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+use_parent_material = true
+position = Vector2(369, -322)
+rotation = -2.7079
+scale = Vector2(1, 1)
+texture = SubResource("AtlasTexture_nw1dg")
+
+[node name="Sprite2D37" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+use_parent_material = true
+position = Vector2(1753, -278)
+rotation = -1.41132
+scale = Vector2(1, 1)
+texture = SubResource("AtlasTexture_nw1dg")
+
+[node name="Sprite2D38" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+use_parent_material = true
+position = Vector2(979, 295)
+rotation = 1.59738
+scale = Vector2(1, 1)
+texture = SubResource("AtlasTexture_nw1dg")
+
+[node name="Sprite2D34" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+use_parent_material = true
+position = Vector2(-182, -648)
+rotation = 0.33712
+scale = Vector2(1, 1)
+texture = SubResource("AtlasTexture_nw1dg")
+
+[node name="Sprite2D35" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+use_parent_material = true
+position = Vector2(1536, -1180)
+rotation = 2.12708
+scale = Vector2(1, 1)
+texture = SubResource("AtlasTexture_nw1dg")
+
+[node name="ParallaxBackground2" type="ParallaxBackground" parent="."]
+layer = 100
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground2"]
+modulate = Color(0.243137, 0.152941, 0.192157, 1)
+material = SubResource("ShaderMaterial_fqw5i")
+motion_scale = Vector2(1.5, 1.5)
+
+[node name="ColorRect" type="ColorRect" parent="ParallaxBackground2/ParallaxLayer2"]
+visible = false
+offset_left = -1116.0
+offset_top = -2496.0
+offset_right = 3197.0
+offset_bottom = 1040.0
+color = Color(1, 0, 0, 1)
+
+[node name="Polygon2D" type="Polygon2D" parent="ParallaxBackground2/ParallaxLayer2"]
+use_parent_material = true
+position = Vector2(133, -485)
+polygon = PackedVector2Array(-6064, -11207, -3242, -11207, -2829, -5840, -2557, -6248, -1645, -6280, -705.426, -5665.6, -1331, -6592, -1341, -7019, -935, -6325, -578, -5893, -429, -6085, -456, -6465, -98, -6053, -394, -5676, 591.596, -6210.36, 310, -6886, 559, -7392, 499, -6893, 597, -6735, 854, -6833, 703, -6599, 833, -6362, 2159, -5864, 2345, -5627, 2150, -5271, 2150, -5610, 1830, -5733, 1683, -5669, 1565, -5522, 1610, -5126, 1418, -5544, 1587, -5861, 905, -6092, -83, -5500, -797, -5416, -1685, -6000, -2301, -5960, -2629, -5560, -2837, -5320, -2867.01, -4836.7, -2658, -1286, -1986, -2441, -2507, -3645, -2471, -4086, -2250, -3563, -2141.03, -3319.03, -1591, -3619, -1783, -3371, -2062.19, -3142.51, -1798, -2551, -683, -3186, -341, -2858, -704, -2965, -1538, -2373, -1816, -2140, -2578.27, -904.981, -2489.33, 249.467, -2165, -206, -1657, -163, -1529, 367, -1726, 659, -1665, 328, -1792, 57, -1953, 74, -2465.16, 563.165, -2285, 2675, -5197, 2630, -5397, 1119)
+
+[node name="Polygon2D2" type="Polygon2D" parent="ParallaxBackground2/ParallaxLayer2"]
+use_parent_material = true
+polygon = PackedVector2Array(3393, 1438, 4146, 1438, 3852, 127, 4358, -425, 4391, -318, 4301, -153, 4475, -271, 4549, -328, 4465, -525, 4672, -760, 4546, -997, 4630, -1209, 4412, -1041, 4487, -803, 3862, -177, 3745, -2431, 4626, -3235, 5083, -3221, 4897, -3392, 4997, -3627, 5668, -3981, 5376, -4425, 5961, -4508, 6290, -4767, 6336, -5016, 5941, -4724, 5395, -4654, 5243, -4559, 5027, -4743, 4754, -4565, 5008, -4540, 5389, -4082, 4840, -3762, 4619, -4047, 4272, -4121, 4005, -3987, 4456, -3898, 4619, -3549, 3736, -2772, 3603, -8145, 3275, -7989, 3282.74, -3814.68, 2165, -3869, 1688, -4333, 1699, -4486, 2067, -4672, 1699, -4678, 1456, -4542, 1474, -4273, 1965, -3744, 1217, -3178, 1716, -3366, 2294, -3589, 3283, -3597, 3340.55, -962.637, 2820, -1386, 2731, -2360, 2655, -1884, 2678, -1280, 3053, -1044, 2554, -954, 2325, -1144, 2226, -1430, 2221, -1267, 2256, -980, 2538, -803, 3143, -896, 3353, -625)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer2"]
+use_parent_material = true
+position = Vector2(2287, -4836)
+rotation = 1.0472
+texture = SubResource("AtlasTexture_mx278")
+
+[node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer2"]
+use_parent_material = true
+position = Vector2(81.9999, -5673)
+rotation = 2.61799
+texture = SubResource("AtlasTexture_mx278")
+
+[node name="Sprite2D3" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer2"]
+use_parent_material = true
+position = Vector2(4768, -62.0002)
+rotation = 2.35619
+texture = SubResource("AtlasTexture_mx278")
+
+[node name="Sprite2D4" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer2"]
+use_parent_material = true
+position = Vector2(-1662, 101)
+rotation = -2.35619
+texture = SubResource("AtlasTexture_gkwod")
+
+[node name="Sprite2D5" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer2"]
+use_parent_material = true
+position = Vector2(-200, -3237)
+rotation = 2.618
+texture = SubResource("AtlasTexture_gkwod")
+
+[node name="Sprite2D6" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer2"]
+use_parent_material = true
+position = Vector2(-2303, -4616)
+texture = SubResource("AtlasTexture_gkwod")
+
+[node name="Sprite2D7" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer2"]
+use_parent_material = true
+position = Vector2(1755, -5541)
+rotation = 2.85365
+texture = SubResource("AtlasTexture_gkwod")
+
+[node name="Sprite2D8" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer2"]
+use_parent_material = true
+position = Vector2(1096, -7335)
+rotation = 1.21316
+texture = SubResource("AtlasTexture_gkwod")
+
+[node name="Sprite2D9" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer2"]
+use_parent_material = true
+position = Vector2(5168, -3173)
+rotation = 1.95345
+texture = SubResource("AtlasTexture_gkwod")
+
+[node name="Sprite2D10" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer2"]
+use_parent_material = true
+position = Vector2(4643, -4588)
+rotation = -1.65384
+texture = SubResource("AtlasTexture_gkwod")
+
+[node name="Sprite2D11" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer2"]
+use_parent_material = true
+position = Vector2(6352, -5047)
+rotation = 0.556011
+texture = SubResource("AtlasTexture_nw1dg")
+
+[node name="Sprite2D12" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer2"]
+use_parent_material = true
+position = Vector2(1391, -3448)
+rotation = -1.29831
+texture = SubResource("AtlasTexture_nw1dg")
+
+[node name="Sprite2D13" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer2"]
+use_parent_material = true
+position = Vector2(2018, -4089)
+rotation = -0.0214079
+texture = SubResource("AtlasTexture_nw1dg")
+
+[node name="Sprite2D14" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer2"]
+use_parent_material = true
+position = Vector2(-1439, -4141)
+rotation = 0.832861
+scale = Vector2(1, 1)
+texture = SubResource("AtlasTexture_nw1dg")
+
+[node name="Sprite2D15" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer2"]
+use_parent_material = true
+position = Vector2(-2071, -779)
+rotation = -0.394996
+texture = SubResource("AtlasTexture_nw1dg")
+
+[node name="Sprite2D16" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer2"]
+use_parent_material = true
+position = Vector2(-1609, -2552)
+rotation = 1.92541
+texture = SubResource("AtlasTexture_nw1dg")
+
+[node name="Sprite2D17" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer2"]
+use_parent_material = true
+position = Vector2(2485, -715)
+rotation = -2.56005
+texture = SubResource("AtlasTexture_nw1dg")
+
+[node name="Sprite2D18" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer2"]
+use_parent_material = true
+position = Vector2(2555, -1428)
+rotation = -1.87653
+texture = SubResource("AtlasTexture_nw1dg")
+
+[node name="Sprite2D19" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer2"]
+use_parent_material = true
+position = Vector2(2703, -2410)
+rotation = -0.269883
+texture = SubResource("AtlasTexture_nw1dg")
+
+[node name="Sprite2D20" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer2"]
+use_parent_material = true
+position = Vector2(4662, -1284)
+rotation = 0.466751
+texture = SubResource("AtlasTexture_nw1dg")
+
+[node name="Sprite2D21" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer2"]
+use_parent_material = true
+position = Vector2(4166, -4192)
+rotation = -0.853322
+texture = SubResource("AtlasTexture_nw1dg")
+
+[node name="Sprite2D22" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer2"]
+use_parent_material = true
+position = Vector2(-297, -6997)
+rotation = 0.161245
+texture = SubResource("AtlasTexture_nw1dg")
+
+[node name="Sprite2D23" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer2"]
+use_parent_material = true
+position = Vector2(615, -7881)
+rotation = -0.2747
+scale = Vector2(1, 1)
+texture = SubResource("AtlasTexture_nw1dg")
+
+[node name="Sprite2D24" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer2"]
+use_parent_material = true
+position = Vector2(2237, -5684)
+rotation = -2.7289
+scale = Vector2(1, 1)
+texture = SubResource("AtlasTexture_nw1dg")
+
+[node name="Darken" type="Node2D" parent="ParallaxBackground2/ParallaxLayer2"]
 
 [node name="Snail" parent="." node_paths=PackedStringArray("boundary_left", "boundary_right", "boundary_down") instance=ExtResource("1_77obm")]
 unique_name_in_owner = true
@@ -326,28 +633,6 @@ color = Color(0.243137, 0.152941, 0.192157, 1)
 [node name="Polygon2D2" type="Polygon2D" parent="Sign2"]
 color = Color(0.45098, 0.243137, 0.223529, 1)
 polygon = PackedVector2Array(-500, -165, -402, -259, -311, -153, -338, 130, -421, 47, -511, 118)
-
-[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
-
-[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
-material = SubResource("ShaderMaterial_aekaq")
-motion_scale = Vector2(0.5, 0.5)
-
-[node name="ColorRect" type="ColorRect" parent="ParallaxBackground/ParallaxLayer"]
-visible = false
-offset_left = -1116.0
-offset_top = -2496.0
-offset_right = 3197.0
-offset_bottom = 1040.0
-color = Color(1, 0, 0, 1)
-
-[node name="Polygon2D" type="Polygon2D" parent="ParallaxBackground/ParallaxLayer"]
-use_parent_material = true
-polygon = PackedVector2Array(-1342, 1370, -1300, -2988, -742, -2988, -571, -946, 135, -1160, 390, -1661, 459, -2030, 545, -2407, 573, -2613, 613, -2286, 551, -1816, 866, -1742, 1133, -1507, 1496, -1197, 1192, -1328, 818, -1588, 497, -1544, 219, -1005, -337.41, -733.065, -474, -474, -438, -216, -234, -382, -218, -618, -146, -342, -411.044, -92.7942, -357.47, 231.606, 18, 118, 132, -113, 223, -170, 203, -32, 283, -12, 805, -227, 838, -658, 949, -264, 905, -158, 721, -59, 690, 92, 758, 220, 879, 304, 657, 318, 559, 39, 148, 183, -18, 284, -195, 334, -74, 455, 122, 522, 304, 683, 354, 1016, 230, 801, 61, 643, -349, 482, -256, 1020, -192, 1334)
-
-[node name="Polygon2D2" type="Polygon2D" parent="ParallaxBackground/ParallaxLayer"]
-use_parent_material = true
-polygon = PackedVector2Array(2730, 1309, 4664, 1320, 3861, -818, 2786, -3556, 1994, -3081, 2930, -601)
 
 [editable path="GroundPoly"]
 [editable path="Branch"]
