@@ -176,7 +176,7 @@ _data = {
 "collect": SubResource("Animation_22ix2")
 }
 
-[node name="Ladybug" type="Area2D"]
+[node name="Ladybug" type="Area2D" groups=["ladybug"]]
 collision_layer = 128
 collision_mask = 3
 script = ExtResource("1_qifhl")

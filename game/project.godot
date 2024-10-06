@@ -30,6 +30,7 @@ plantpart=""
 plantpoint=""
 stopper=""
 snailrigid=""
+ladybug=""
 
 [input]
 
