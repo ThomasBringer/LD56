@@ -16,7 +16,6 @@ _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.5), -1.75, 0.0, 0, 0]
 point_count = 2
 
 [node name="Grass" type="Node2D"]
-position = Vector2(-1000, 0)
 script = ExtResource("1_8mu2l")
 
 [node name="PlantPart" parent="." instance=ExtResource("2_4ys8u")]

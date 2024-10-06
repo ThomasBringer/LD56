@@ -7,6 +7,7 @@ var points: Array[Node2D] = []
 func _ready() -> void:
 	line.clear_points()
 	search_part()
+	#line.scale.x = scale.x
 
 func search_part(my_parent: Node2D = self) -> void:
 	for child in my_parent.get_children():
@@ -18,4 +19,4 @@ func search_part(my_parent: Node2D = self) -> void:
 
 func _process(delta: float) -> void:
 	for i in point_count:
-		line.set_point_position(i, points[i].global_position - line.global_position)
+		line.set_point_position(i, (points[i].global_position - line.global_position))

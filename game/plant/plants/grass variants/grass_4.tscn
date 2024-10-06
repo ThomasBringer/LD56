@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://xo3mvivdkf73"]
+
+[ext_resource type="PackedScene" uid="uid://cqedsbp3sxn4t" path="res://plant/plants/grass.tscn" id="1_1vdwl"]
+
+[node name="Grass3" instance=ExtResource("1_1vdwl")]
+
+[node name="PlantPart" parent="." index="0"]
+rotation = -0.523599
+
+[node name="PlantPart2" parent="PlantPart" index="1"]
+rotation = -0.261799
+
+[node name="PlantPart3" parent="PlantPart/PlantPart2" index="1"]
+rotation = -0.261799
+
+[editable path="PlantPart/PlantPart2"]
+[editable path="PlantPart/PlantPart2/PlantPart3"]
