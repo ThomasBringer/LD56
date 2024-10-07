@@ -13,6 +13,7 @@ void fragment() {
 	vec2 pos = SCREEN_UV * texture_size;
 	//vec2 pos = vec2(SCREEN_UV.x * texture_size.x, SCREEN_UV.y * texture_size.y);
 	vec2 pos_centered = pos - texture_size * .5 - (offset * texture_size / vec2(1920, 1080));
+
 	float r2 = dot(pos_centered, pos_centered);
 	if (r2 < radius * radius) {
 		COLOR = c;
