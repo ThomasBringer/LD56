@@ -232,7 +232,7 @@ libraries = {
 stream = ExtResource("3_7jjwr")
 volume_db = -5.0
 autoplay = true
-max_distance = 1500.0
+max_distance = 1250.0
 
 [node name="CollectAudio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_jlgm1")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://2wqowd4uydil"]
+[gd_scene load_steps=43 format=3 uid="uid://2wqowd4uydil"]
 
 [ext_resource type="PackedScene" uid="uid://b4muiwy510xda" path="res://snail/snail.tscn" id="1_77obm"]
 [ext_resource type="AudioStream" uid="uid://cs03edgk0ym1g" path="res://audio/garden-ambience-236744.mp3" id="1_askrw"]
@@ -25,6 +25,7 @@
 [ext_resource type="PackedScene" uid="uid://cbwnfasji00c3" path="res://ground/normal props/rake.tscn" id="22_mbeeu"]
 [ext_resource type="PackedScene" uid="uid://du5u0escyubkj" path="res://muhsroom/mushroom.tscn" id="22_t8e33"]
 [ext_resource type="Shader" path="res://misc/circle_reveal.gdshader" id="25_chf0h"]
+[ext_resource type="AudioStream" uid="uid://1snkkvdrlgnd" path="res://audio/snailaway.wav" id="26_wqhgf"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_aekaq"]
 shader = ExtResource("15_vjkhb")
@@ -1521,6 +1522,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("26_wqhgf")
+autoplay = true
 
 [editable path="Stopper3"]
 [editable path="GroundPoly"]
